@@ -58,11 +58,11 @@ def final_page_ai(data, name_user = 'User'):
 
     def handle_userinput(user_question):
             try:
-                st.write('trying')
+                #st.write('trying')
                 response = st.session_state.conversation({'question': user_question})
                 st.session_state.chat_history = response['chat_history']
             except:
-                st.write('except')
+                #st.write('except')
                 st.session_state.raw_text = get_text(data)
                 st.session_state.text_chunks = get_text_chunks(st.session_state.raw_text)
                 vectorstore = get_vectorstore(st.session_state.text_chunks)
