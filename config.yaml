@@ -1,0 +1,20 @@
+cookie:
+  expiry_days: 30
+  key: some_signature_key
+  name: some_cookie_name
+
+credentials:
+  usernames:
+
+    manager:
+      email: admin@gmail.com
+      name: GM
+      password: $2b$12$nlrQuHtl6ClpCDRNTCb68e/EaydVww.7vFMsKQEb9goK1J5.ppyUC
+    
+    allears:
+      email: admin@gmail.com
+      name: AllEars 
+      password: $2b$12$nlrQuHtl6ClpCDRNTCb68e/EaydVww.7vFMsKQEb9goK1J5.ppyUC
+      
+preauthorized:
+  emails: null
