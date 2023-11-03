@@ -486,7 +486,8 @@ class FeedBackHelper:
                OnDeleteSingleRev(index)   
       
       with tab2:
-         st.write('Coming soon')
+         get_sales_date(store_id= [store_id], date = date, time = time)
+
          
    def download(self):
       st.write('Download')
