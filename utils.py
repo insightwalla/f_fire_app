@@ -582,7 +582,6 @@ def preprocess_single_df(df):
       
 from google_big_query import GoogleBigQuery, TransformationGoogleBigQuery
 def get_sales_date(store_id, date, time = None):
-    
     googleconnection = GoogleBigQuery()
 
     query_for_only_a_date = f'''

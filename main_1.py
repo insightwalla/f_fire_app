@@ -484,11 +484,25 @@ class FeedBackHelper:
             
             if c2_button.form_submit_button('Delete', type='secondary', use_container_width=True):
                OnDeleteSingleRev(index)   
-      
       with tab2:
-         get_sales_date(store_id= [store_id], date = date, time = time)
+            venue_map = {
+               'Dishoom Covent Garden': 1,
+               'Dishoom Shoreditch': 2,
+               'Dishoom Kings Cross': 3,
+               'Dishoom Carnaby': 4,
+               'Dishoom Edinburgh': 5,
+               'Dishoom Kensington': 6,
+               'Dishoom Manchester': 7,
+               'Dishoom Birmingham': 8,
+               'Dishoom Canary Wharf': 9
+            }
+            
+            # get the id from the name
+            store_id = venue_map[venue]
+            date = review['Reservation_Date']
+            time = review['Reservation_Time']
+            get_sales_date(store_id= [store_id], date = date, time = time)
 
-         
    def download(self):
       st.write('Download')
       
