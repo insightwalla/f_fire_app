@@ -485,6 +485,7 @@ class FeedBackHelper:
             if c2_button.form_submit_button('Delete', type='secondary', use_container_width=True):
                OnDeleteSingleRev(index)   
       with tab2:
+         try:
             venue_map = {
                'Dishoom Covent Garden': 1,
                'Dishoom Shoreditch': 2,
@@ -502,7 +503,8 @@ class FeedBackHelper:
             date = review['Reservation_Date']
             time = review['Reservation_Time']
             get_sales_date(store_id= [store_id], date = date, time = time)
-
+         except:
+            st.write('No time specified')
    def download(self):
       st.write('Download')
       
