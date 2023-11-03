@@ -573,7 +573,7 @@ class FeedBackHelper:
                df = pd.concat([df, pd.DataFrame(review.to_dict(), index=[i])], axis=0)
          # sort by idx
       df = df.sort_values(by=['idx'])
-      st.write(len(df))
+      #st.write(len(df))
 
       data = df
       # get unique venues
@@ -586,7 +586,7 @@ class FeedBackHelper:
          venue_data_to_lab = venue_data_to_lab[venue_data_to_lab['Details'] != '']
          # take off nan
          venue_data_to_lab = venue_data_to_lab[venue_data_to_lab['Details'] != 'nan']
-         st.write(len(venue_data_to_lab))
+         #st.write(len(venue_data_to_lab))
          # get the total number of reviews
          tot_ = len(venue_data_to_lab) + 6
          tot_done = len(venue_data_to_lab[venue_data_to_lab['Label_Dishoom'] != ''])
