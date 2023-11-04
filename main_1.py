@@ -433,10 +433,10 @@ class FeedBackHelper:
       
       with edit_tab:
          with st.form('scoring'):
-            col_buttons = st.columns(5)
-            c1_button = col_buttons[4]
-            c2_button = col_buttons[0]
-
+            col_buttons = st.columns([0.3,0.3,0.3])
+            c1_button = col_buttons[0]
+            c2_button = col_buttons[1]
+            c3_button = col_buttons[2]
 
             #st.write(index, from_real_to_fake[index])
             #st.write(from_real_to_fake)
@@ -572,8 +572,7 @@ class FeedBackHelper:
                   #    col1.write(doc[0].to_dict())
                   #    col2.write(review)
                   doc[0].reference.update(review)
-                  st.success('Update Complete')
-                  st.rerun()
+                  c2.success('Update Complete')
                else:
                   st.info('Nothing to Update')
                
@@ -585,8 +584,7 @@ class FeedBackHelper:
             if c1_button.form_submit_button('Update', type='primary', use_container_width=True):
                   OnUpdateButton(review)
 
-               
-            if c2_button.form_submit_button('Delete', type='secondary', use_container_width=True):
+            if c3_button.form_submit_button('Delete', type='secondary', use_container_width=True):
                OnDeleteSingleRev()   
       
       with venue_tab:
