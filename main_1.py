@@ -355,6 +355,9 @@ class FeedBackHelper:
       upload = upload_space.button('Upload', type='primary', use_container_width=True, on_click=handle_upload)
    
    def edit(self):
+      with st.expander('Session_State'):
+         st.write(st.session_state)
+         
       res = self.read(show= False)
       
 
