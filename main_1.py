@@ -233,9 +233,10 @@ class FeedBackHelper:
             df = df[(df['Sentiment'] == 'NEGATIVE') & (df['Label_Dishoom'] == '')]
 
          # now filter by thumbs up and thumbs down
-         thumbs_up = st.sidebar.checkbox('Show Thumbs Up', key='thumbs_up')
-         thumbs_down = st.sidebar.checkbox('Show Thumbs Down', key='thumbs_down')
-         suggestions = st.sidebar.checkbox('Show Suggestions', key='suggestions')
+         thumbs_up = st.toggle('Show Thumbs Up', key='thumbs_up_filter')
+         thumbs_down = st.toggle('Show Thumbs Down', key='thumbs_down_filter')
+         suggestions = st.toggle('Show Suggestions', key='suggestions_filter')
+
 
          if thumbs_up:
             df = df[df['👍'] == '1']
