@@ -594,7 +594,7 @@ class FeedBackHelper:
             st.stop()
         
    def download(self):
-      c1,c2 = st.columns(2)
+      c1,c2,c3 = st.columns([0.5,0.3, 0.2])
 
       c1.subheader('Download')
       
@@ -618,8 +618,8 @@ class FeedBackHelper:
       venue = st.selectbox('Select the Venue', options = all_venues, index = 0)
       if venue != 'All':
          df = df[df['Reservation_Venue'] == venue]
-      name_file = st.text_input('data')
-      if c2.button('Download Data', type = 'primary'):
+      name_file = c3.text_input('data', value ='labelled_reviews'
+      if c2.button(f'Download Data - {name_file}', type = 'primary'):
          st.markdown(get_table_download_link(df, name_file))
       st.write(df)
 
