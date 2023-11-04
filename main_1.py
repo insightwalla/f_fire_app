@@ -215,6 +215,9 @@ class FeedBackHelper:
       search = st.sidebar.text_input('Search', key='search')
       if search != '':
          df = df[df['Details'].str.contains(search, case=False)]
+         if len(df) == 0:
+            st.info('No reviews Found')
+            st.stop()
          
 
       if 'venue' not in st.session_state:
