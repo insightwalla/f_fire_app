@@ -487,19 +487,19 @@ class FeedBackHelper:
 
                if len(best_rev) == 3 and not is_this_best:
                   is_best = False
-                  col_best.write('You have already selected 3 best reviews')
+                  col_best.info('Already selected 3 👍')
                else:
                   is_best = col_best.toggle('👍',review['👍'] == '1', key = f'is_good{index}={venue}')
 
                if len(worst_rev) == 3 and not is_this_worst:
                   is_worst = False
-                  col_worst.write('You have already selected 3 worst reviews')
+                  col_worst.info('Already selected 3 👎')
                else:
                   is_worst = col_worst.toggle('👎',review['👎'] == '1', key= f'is_bad{index}={venue}')
 
                if len(suggestions_rev) == 3 and not is_this_suggestion:
                   is_suggestion = False
-                  col_sugg.write('You have already selected 3 suggestions')
+                  col_sugg.write('Already selected 3 💡')
                else:
                   is_suggestion = col_sugg.toggle('💡',review['💡'] == '1', key= f'is_suggestion{index}={venue}')
 
