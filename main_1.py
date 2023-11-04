@@ -251,7 +251,7 @@ class FeedBackHelper:
       if len(df_empty) > 0:
          df_empty = rescoring_empty(df_empty, new=True)
          create_container_for_each_sentiment(df, df_empty)
-      self.plot(df)
+      #self.plot(df)
 
 
       def OnDeleteVenueRevs(name):
