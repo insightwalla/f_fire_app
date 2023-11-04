@@ -375,9 +375,8 @@ class FeedBackHelper:
       # 2. Create the selectbox for the venue
       all_venues = res['all_venues']
       c1,c2 = st.columns(2)
-      self.venue = c1.selectbox('Choose the venue', all_venues, key='venue')
-      venue = self.venue
-      st.session_state.venue = venue
+      venue = c1.selectbox('Choose the venue', all_venues, key='venue')
+
       # 3. Create the delete button
       def OnDeleteVenueRevs(name):
             # check if the doc exists
@@ -393,7 +392,7 @@ class FeedBackHelper:
                self.db.collection(u'feedback').document(name).delete()
                st.write('Deleted Data for ', name)
 
-      if st.sidebar.button(f'Delete **{self.venue}**', type = 'primary', use_container_width=True):
+      if st.sidebar.button(f'Delete **{venue}**', type = 'primary', use_container_width=True):
          OnDeleteVenueRevs(self.venue)
       with st.sidebar.expander('Ratings Info'):
                st.write(f'**5** -> **10**')
