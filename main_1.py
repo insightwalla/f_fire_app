@@ -836,26 +836,19 @@ class FeedBackHelper:
       if choice == 'Feedback':
          if self.df is None:
                self.read(show = False)
-               st.stop()  
 
       if choice == 'Scoring':
             self.edit()
-            st.stop()
       elif choice == 'Upload':
             self.upload_excels()
-            st.stop()
       elif choice == 'Download':
             self.download()
-            st.stop()
       elif choice == 'AI Assistant':
             self.ai_assistant()
-            st.stop()
       elif choice == 'Reporting':
             self.reporting()
-            st.stop()
       elif choice == 'Settings':
             self.settings()
-            st.stop()
 
    def create_sidebar_menu(self, with_db = True):
       with st.sidebar:
