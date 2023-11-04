@@ -566,16 +566,16 @@ class FeedBackHelper:
                   doc[0].reference.get().reference.update(review)
                st.success('Review updated successfully')
             
-            def OnDeleteSingleRev(index):
+            def OnDeleteSingleRev():
                with st.spinner('Deleting review...'):
                   doc[0].reference.delete()
                st.success('Review deleted successfully')
 
             if c1_button.form_submit_button('Update', type='primary', use_container_width=True):
-               OnUpdateButton(review, index)
+               OnUpdateButton(review)
             
             if c2_button.form_submit_button('Delete', type='secondary', use_container_width=True):
-               OnDeleteSingleRev(index)   
+               OnDeleteSingleRev()   
       
       with venue_tab:
             venue_map = {
