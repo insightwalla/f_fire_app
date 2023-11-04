@@ -594,7 +594,7 @@ class FeedBackHelper:
             st.stop()
         
    def download(self):
-      c1,c2 = st.columns()
+      c1,c2 = st.columns(2)
 
       c1.subheader('Download')
       
