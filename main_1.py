@@ -221,14 +221,14 @@ class FeedBackHelper:
             st.info('No reviews Found')
             st.stop()
 
-      with st.expander('Filters'):
+      with st.sidebar.expander('Filters'):
          # filter by sentiment
-         sentiment = st.sidebar.selectbox('Choose the sentiment', ['All', 'Positive', 'Negative'], key='sentiment', index=0)
+         sentiment = st.selectbox('Choose the sentiment', ['All', 'Positive', 'Negative'], key='sentiment', index=0)
          if sentiment != 'All':
             df = df[df['Sentiment'] == sentiment]
 
          # add toggle for searching only the ones negative with empty label
-         only_negative_empty = st.sidebar.checkbox('Only Negative Empty', key='only_negative_empty')
+         only_negative_empty = st.checkbox('Only Negative Empty', key='only_negative_empty')
          if only_negative_empty:
             df = df[(df['Sentiment'] == 'NEGATIVE') & (df['Label_Dishoom'] == '')]
 
