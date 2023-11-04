@@ -598,17 +598,9 @@ class FeedBackHelper:
 
       c1.subheader('Download')
       
-      def get_table_download_link(data, name_file):
-         # rename the columns that have emoji
-         data = data.rename(columns={'👍': 'thumbs_up', '👎': 'thumbs_down', '💡': 'suggestions'})
-         # create a link to download the dataframe
-         csv = data.to_csv(index=False)
-         b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-         href = f'<a href="data:file/csv;base64,{b64}" download="{name_file}.csv">Download File as ({name_file})</a>'
-         return href
-      
       res = self.read(show= False)
       df = res['data']
+      
       all_venues =  ['All'] + res['all_venues']
       if len(df) == 0:  
          st.info('No data found - Please select Upload to upload the data')
@@ -619,9 +611,26 @@ class FeedBackHelper:
       if venue != 'All':
          df = df[df['Reservation_Venue'] == venue]
       name_file = c2.text_input('data', value ='labelled_reviews' if venue == 'All' else f'labelled_rev_{venue}')
-      if c3.button(f'Download as **{name_file}.csv**', type = 'primary'):
-         st.markdown(get_table_download_link(df, name_file))
+      
+      @st.cache
+      def convert_df(df):
+         # IMPORTANT: Cache the conversion to prevent computation on every rerun
+         return df.to_csv().encode('utf-8')
+
+      csv = convert_df(df)
+
+      st.download_button(
+         label="Download data as CSV",
+         data=csv,
+         file_name=name_file,
+         mime='text/csv',
+      )
+
+      # create a download button
+      if st.download_button(label='Download', data=df.to_csv(index=False), file_name='labelled_reviews.csv', mime='text/csv'):
+         st.write('Downloaded')
       st.write(df)
+
 
 
 
