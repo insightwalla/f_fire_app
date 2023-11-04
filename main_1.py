@@ -366,13 +366,7 @@ class FeedBackHelper:
    
    def edit(self):
       res = self.read(show= False)
-      with st.sidebar.expander('Ratings Info'):
-         st.write(f'**5** -> **10**')
-         st.write(f'**4** -> **8**')
-         st.write(f'**3** -> **5**')
-         st.write(f'**2** -> **1**')
-         st.write(f'**1** -> **1**')
-
+      
 
       # 1. Read the data from the database
 
@@ -398,8 +392,14 @@ class FeedBackHelper:
                self.db.collection(u'feedback').document(name).delete()
                st.write('Deleted Data for ', name)
 
-      if st.sidebar.button(f'Delete {self.venue}', type = 'primary', use_container_width=True):
+      if st.sidebar.button(f'Delete **{self.venue}**', type = 'primary', use_container_width=True):
          OnDeleteVenueRevs(self.venue)
+      with st.sidebar.expander('Ratings Info'):
+               st.write(f'**5** -> **10**')
+               st.write(f'**4** -> **8**')
+               st.write(f'**3** -> **5**')
+               st.write(f'**2** -> **1**')
+               st.write(f'**1** -> **1**')
 
       # 4. Prepare the dataframes
       df = df[df['Reservation_Venue'] == self.venue] # filter by venue
