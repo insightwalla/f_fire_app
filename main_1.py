@@ -316,7 +316,6 @@ class FeedBackHelper:
 
       upload = upload_space.button('Upload', type='primary', use_container_width=True, on_click=handle_upload)
    
-   
    def edit(self):
       # 1. Read the data from the database
       res = self.read(show= False)
@@ -571,9 +570,6 @@ class FeedBackHelper:
          get_table_download_link(df)
          st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
-
-
-
    def ai_assistant(self):
       if 'data' not in st.session_state:
 
@@ -739,6 +735,11 @@ class FeedBackHelper:
 
    def run(self):
       choice = self.create_sidebar_menu()
+      if choice == 'Feedback':
+         if self.df is None:
+            with st.spinner('Loading Feedback...'):
+               self.read(show = False)
+
       if choice == 'Scoring':
             self.edit()
       elif choice == 'Upload':
