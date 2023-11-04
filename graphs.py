@@ -156,12 +156,13 @@ def create_container_for_each_sentiment(df, df_empty = None):
    number_of_total_reviews = len(df)
    with st.expander('Reviews **{}**'.format(number_of_total_reviews + len(df_empty))):
       tab_empty, tab_positive, tab_negative, tab_neutral = st.tabs([f'Empty **{len(df_empty)}**', f'Positive **{len(positive)}**', f'Negative **{len(negative)}**', f'Neutral **{len(neutral)}**'])
+      columns_to_keep = ['Details', 'Sentiment', 'Feedback_Food_Rating', 'Feedback_Drink_Rating', 'Feedback_Service_Rating', 'Feedback_Ambience_Rating', 'Overall_Rating', 'Date_Submitted', 'Reservation_Date', 'Day_Name', 'Day_Part', 'Source']
       with tab_positive:
-         st.write(positive)
+         st.write(positive[columns_to_keep])
       with tab_negative:
-         st.write(negative)
+         st.write(negative[columns_to_keep])
       with tab_neutral:
-         st.write(neutral)
+         st.write(neutral[columns_to_keep])
       with tab_empty:
          df = df_empty 
          scores = []
