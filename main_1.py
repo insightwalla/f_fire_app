@@ -627,6 +627,7 @@ class FeedBackHelper:
          type = 'primary'
       )
       st.write(df)
+      st.stop()
 
 
 
