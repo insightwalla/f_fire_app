@@ -365,17 +365,7 @@ class FeedBackHelper:
       # 2. Create the selectbox for the venue
       all_venues = res['all_venues']
       c1,c2 = st.columns(2)
-
-      if 'venue' not in st.session_state:
-            st.session_state.venue = None
-      
-      def on_change_v(df):
-         df = df[df['Reservation_Venue'] == st.session_state.venue if st.session_state != None else all_venues[0]]
-
-      venue = c1.selectbox(label = 'Choose the venue',
-                            options = all_venues,
-                            on_change = on_change_v(df), 
-                            key='venue') 
+      venue = c1.selectbox('Choose the venue', all_venues, key='venue')
 
       # 3. Create the delete button
       def OnDeleteVenueRevs(name):
@@ -401,6 +391,9 @@ class FeedBackHelper:
                st.write(f'**2** -> **1**')
                st.write(f'**1** -> **1**')
 
+      # 4. Prepare the dataframes
+      df = df[df['Reservation_Venue'] == venue] # filter by venue
+      
       # take off empty detail
       df['Details'] = df['Details'].apply(lambda x: x.strip())
       df_full = df[df['Details'] != 'nan']
