@@ -185,8 +185,8 @@ def rescoring(df):
    value_map = {
                5: 10,
                  4: 8,
-                   3: 7,
-                     2: 5,
+                   3: 5,
+                     2: 1,
                        1: 1
                }
    columns_to_rescore = ['Feedback: Food Rating', 'Feedback: Drink Rating', 'Feedback: Service Rating', 'Feedback: Ambience Rating', 'Overall Rating']
@@ -216,9 +216,9 @@ def rescoring_empty(df, new = False):
    
    value_map = {
                5: 10,
-                 4: 9,
-                   3: 8,
-                     2: 5,
+                 4: 8,
+                   3: 5,
+                     2: 1,
                        1: 1
                }
    df.loc[:, columns_to_rescore] = df[columns_to_rescore].replace('', 0)   # now transform the values into flaot

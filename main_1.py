@@ -264,6 +264,7 @@ class FeedBackHelper:
          create_container_for_each_sentiment(df, df_empty)
       self.plot(df)
 
+
       def OnDeleteVenueRevs(name):
             # check if the doc exists
             doc_ref = self.db.collection(u'feedback').document(name)
@@ -364,8 +365,17 @@ class FeedBackHelper:
       upload = upload_space.button('Upload', type='primary', use_container_width=True, on_click=handle_upload)
    
    def edit(self):
-      # 1. Read the data from the database
       res = self.read(show= False)
+      with st.sidebar.expander('Ratings Info'):
+         st.write(f'**5** : **10**')
+         st.write(f'**4** : **8**')
+         st.write(f'**3** : **5**')
+         st.write(f'**2** : **1**')
+         st.write(f'**1** : **1**')
+
+
+      # 1. Read the data from the database
+
       self.df = res['data']
       df = self.df
       # 2. Create the selectbox for the venue
