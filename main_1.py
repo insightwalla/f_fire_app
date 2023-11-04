@@ -564,12 +564,8 @@ class FeedBackHelper:
 
             # update the
             def OnUpdateButton(review):
-               with st.spinner('Updating review...'):
-                  try:
-                     doc[0].reference.get().reference.update(review)
-                     st.success('Review updated successfully')
-                  except:
-                     st.warning('Problem when updating!')
+                  doc[0].reference.get().reference.update(review)
+                  st.success('Update Complete')
 
             
             def OnDeleteSingleRev():
