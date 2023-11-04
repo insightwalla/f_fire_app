@@ -421,7 +421,7 @@ class FeedBackHelper:
       def on_change_n():
          st.session_state.last_index = st.session_state.index
 
-      index = c2.number_input('Choose the index', min_value=1, max_value=len(df_full), value = st.session_state.last_index, key='index')
+      index = c2.number_input('Choose the index', min_value=1, max_value=len(df_full), value = st.session_state.last_index, on_change=on_change_n)
 
       edit_tab, venue_tab = st.tabs(['Edit', 'Venue Capacity'])
       with edit_tab:
