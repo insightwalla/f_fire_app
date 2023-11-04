@@ -442,6 +442,8 @@ class FeedBackHelper:
             #st.write('Fake index: ', index, 'Real index: ', from_real_to_fake[index])
             
             with st.spinner('Loading review...'):
+               st.write(index)
+               st.write(from_real_to_fake[index])
                doc = self.get_review_by_venue_and_idx(venue, from_real_to_fake[index], give_doc=True)
             try:
                review = doc[0].to_dict()
