@@ -249,16 +249,6 @@ class FeedBackHelper:
             st.info('No reviews found!')
             st.stop()
 
-         
-
-      if 'venue' not in st.session_state:
-         try:
-            st.session_state.venue = df['Reservation_Venue'].unique().tolist()[0]
-         except:
-            st.session_state.venue = None
-
-      self.venue = st.session_state.venue
-
       if len(df_empty) > 0:
          df_empty = rescoring_empty(df_empty, new=True)
          create_container_for_each_sentiment(df, df_empty)
