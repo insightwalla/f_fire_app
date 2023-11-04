@@ -705,7 +705,6 @@ class FeedBackHelper:
    def run(self):
       choice = self.create_sidebar_menu()
       if choice == 'Scoring':
-         with st.spinner('Loading Scoring...'):
             self.edit()
       elif choice == 'Upload':
          with st.spinner('Loading Upload...'):
