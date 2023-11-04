@@ -566,21 +566,20 @@ class FeedBackHelper:
             with c_am_r:
                ambience_rating = st.number_input(f'Ambience Rating: **{review["Feedback_Ambience_Rating"]}**', min_value=1, max_value=value_map[float(review['Feedback_Ambience_Rating']) if review['Feedback_Ambience_Rating'] not in nans_map else 5], value=int(review['New_Ambience_Rating']), key = 'ambience' + str(index)+venue)
                
-            # update the review
-            review['New_Overall_Rating'] = overall_rating
-            review['New_Food_Rating'] = food_rating
-            review['New_Drink_Rating'] = drink_rating
-            review['New_Service_Rating'] = service_rating
-            review['New_Ambience_Rating'] = ambience_rating
-            review['Label_Dishoom'] = ' - '.join(new_label)
-            review['Menu_Item'] = ' - '.join(new_food)
-            review['Drink_Item'] = ' - '.join(new_drink)
-            review['👍'] = '1' if is_best else '0'
-            review['👎'] = '1' if is_worst else '0'
-            review['💡'] = '1' if is_suggestion else '0'
-
             # update the
             def OnUpdateButton(review):
+                  # update the review
+                  review['New_Overall_Rating'] = overall_rating
+                  review['New_Food_Rating'] = food_rating
+                  review['New_Drink_Rating'] = drink_rating
+                  review['New_Service_Rating'] = service_rating
+                  review['New_Ambience_Rating'] = ambience_rating
+                  review['Label_Dishoom'] = ' - '.join(new_label)
+                  review['Menu_Item'] = ' - '.join(new_food)
+                  review['Drink_Item'] = ' - '.join(new_drink)
+                  review['👍'] = '1' if is_best else '0'
+                  review['👎'] = '1' if is_worst else '0'
+                  review['💡'] = '1' if is_suggestion else '0'
                   doc[0].reference.get().reference.update(review)
                   st.success('Update Complete')
 
