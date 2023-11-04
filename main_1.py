@@ -415,6 +415,8 @@ class FeedBackHelper:
 
       # 5
       # We want to avoid loosing the index when we filter the dataframe so we save the index in the session state
+      if 'index' not in st.session_state:
+         st.session_state.index = 1
       if 'last_index' not in st.session_state:
          st.session_state.last_index = 1
       
