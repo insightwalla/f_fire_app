@@ -621,7 +621,7 @@ class FeedBackHelper:
 
       name_file = st.text_input('data')
       if st.button('Download Data'):
-         st.markdown(get_table_download_link(df, name_file)
+         st.markdown(get_table_download_link(df, name_file))
 
    def ai_assistant(self):
       if 'data' not in st.session_state:
