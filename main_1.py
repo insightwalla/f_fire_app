@@ -588,7 +588,6 @@ class FeedBackHelper:
                      col2.write(review)
                   doc[0].reference.get().reference.update(review)
                   st.success('Update Complete')
-                  st.stop()
                else:
                   st.info('Nothing to Update')
                
@@ -599,6 +598,7 @@ class FeedBackHelper:
             
             if c1_button.form_submit_button('Update', type='primary', use_container_width=True):
                   OnUpdateButton(review)
+                  st.stop()
 
                
             if c2_button.form_submit_button('Delete', type='secondary', use_container_width=True):
@@ -702,7 +702,6 @@ class FeedBackHelper:
       '''
       data_list = []
       data = self.db.collection('feedback').stream()
-
       for doc in data:
          reviews = self.db.collection(u'feedback').document(doc.id).collection(u'reviews').stream()
          for review in reviews:
@@ -721,8 +720,8 @@ class FeedBackHelper:
          venue_data_to_lab = venue_data[venue_data['Sentiment'] == 'NEGATIVE']
          # take off empty detail
          venue_data_to_lab = venue_data_to_lab[venue_data_to_lab['Details'] != '']
-         # take off nan
          venue_data_to_lab = venue_data_to_lab[venue_data_to_lab['Details'] != 'nan']
+         
          #st.write(len(venue_data_to_lab))
          # get the total number of reviews
          tot_ = len(venue_data_to_lab) + 6
