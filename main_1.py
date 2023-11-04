@@ -697,6 +697,8 @@ class FeedBackHelper:
       #st.write(len(df))
 
       data = df
+      self.plot(data)
+
       # get unique venues
       list_of_venue = data['Reservation_Venue'].unique()
       # for each venue get the ones with negative feedback
@@ -839,9 +841,6 @@ class FeedBackHelper:
             self.ai_assistant()
             st.stop()
       elif choice == 'Reporting':
-            res = self.read(show= False)
-            self.plot(res['data'])
-            st.stop() 
             self.reporting()
             st.stop()
       elif choice == 'Settings':
