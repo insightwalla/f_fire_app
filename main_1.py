@@ -638,11 +638,8 @@ class FeedBackHelper:
          type = 'primary'
       )
       st.write(f'{len(df)} Reviews')
-      tab1, tab2 = st.tabs(['Dataframe', 'Informations'])
-      with tab1:
-         st.write(df)
-      with tab2:
-         self.plot(df)
+      st.write(df)
+      self.plot(df)
 
       st.stop()
 
