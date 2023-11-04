@@ -828,7 +828,8 @@ class FeedBackHelper:
       choice = self.create_sidebar_menu()
       if choice == 'Feedback':
          if self.df is None:
-               self.read(show = False)
+               res = self.read(show= False)
+               self.plot(res['data'])
                st.stop()  
 
       if choice == 'Scoring':
