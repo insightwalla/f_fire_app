@@ -351,7 +351,6 @@ class FeedBackHelper:
                   my_big_bar.progress(int((i+1) * 100/how_many), text=f'Uploading {i+1}/{how_many}')
             st.balloons()
             st.info('All Done - You can go at the scoring section now! 😊')
-            st.stop()
 
       upload = upload_space.button('Upload', type='primary', use_container_width=True, on_click=handle_upload)
    
