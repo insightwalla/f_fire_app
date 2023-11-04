@@ -372,8 +372,9 @@ class FeedBackHelper:
          df = df[df['Reservation_Venue'] == st.session_state.venue]
 
       venue = c1.selectbox(label = 'Choose the venue',
-                            all_venues, key='venue', 
-                            on_change = on_change_v(df))
+                            orpions = all_venues,
+                            on_change = on_change_v(df), 
+                            key='venue', 
 
       # 3. Create the delete button
       def OnDeleteVenueRevs(name):
