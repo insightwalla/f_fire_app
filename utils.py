@@ -583,18 +583,19 @@ def preprocess_single_df(df):
 from google_big_query import GoogleBigQuery, TransformationGoogleBigQuery
 
 def get_sales_date(store_id, date, time = None):
-    googleconnection = GoogleBigQuery()
+   try:
+      googleconnection = GoogleBigQuery()
 
-    query_for_only_a_date = f'''
-    SELECT *,
-        EXTRACT(MONTH FROM DateOfBusiness) AS Month
-        FROM `sql_server_on_rds.Dishoom_dbo_dpvHstCheckSummary`
-        WHERE DateOfBusiness = '{date}'
-            AND FKStoreID IN ({','.join([str(i) for i in store_id])})
-    '''
-    df = googleconnection.query(query = query_for_only_a_date, as_dataframe = True)
-    fig, df = TransformationGoogleBigQuery(df, plot = True).transform()
-    # add vertical line on time
-    if time is not None:
-        fig.add_vline(x=time, line_width=10, line_color="red", opacity=0.3)
-    st.plotly_chart(fig, use_container_width = True)
+      query_for_only_a_date = f'''
+      SELECT *,
+         EXTRACT(MONTH FROM DateOfBusiness) AS Month
+         FROM `sql_server_on_rds.Dishoom_dbo_dpvHstCheckSummary`
+         WHERE DateOfBusiness = '{date}'
+               AND FKStoreID IN ({','.join([str(i) for i in store_id])})
+      '''
+      df = googleconnection.query(query = query_for_only_a_date, as_dataframe = True)
+      fig, df = TransformationGoogleBigQuery(df, plot = True).transform()
+      # add vertical line on time
+      if time is not None and time!= 'nan'
+         fig.add_vline(x=time, line_width=10, line_color="red", opacity=0.3)
+      st.plotly_chart(fig, use_container_width = True)
