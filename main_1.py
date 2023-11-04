@@ -442,30 +442,16 @@ class FeedBackHelper:
             #st.write(from_real_to_fake)
             #st.write('Fake index: ', index, 'Real index: ', from_real_to_fake[index])
             
-            with st.spinner('Loading review...'):
-               # st.write(index)
-               # st.write(from_real_to_fake[index])
-               # st.write(len(df_full))
-               doc = self.get_review_by_venue_and_idx(venue, from_real_to_fake[index], give_doc=True)
+            # st.write(index)
+            # st.write(from_real_to_fake[index])
+            # st.write(len(df_full))
+            doc = self.get_review_by_venue_and_idx(venue, from_real_to_fake[index], give_doc=True)
             try:
                review = doc[0].to_dict()
             except:
                st.rerun()
 
             st.markdown(review['Details'])
-            #st.stop()
-            #st.stop()
-            # get the values
-            # overall_rating = c1.number_input(f'Overall Rating: {review["Overall_Rating"]}', min_value=1, max_value=5, value=int(review['New_Overall_Rating']), key = 'overall' + str(index))
-            # food_rating = c2.number_input(f'Food Rating: {review["Feedback_Food_Rating"]}', min_value=1, max_value=5, value=int(review['New_Food_Rating']), key = 'food' + str(index))
-            # drink_rating = c3.number_input(f'Drink Rating: {review["Feedback_Drink_Rating"]}', min_value=1, max_value=5, value=int(review['New_Drink_Rating']), key = 'drink' + str(index))
-            # service_rating = c4.number_input(f'Service Rating: {review["Feedback_Service_Rating"]}', min_value=1, max_value=5, value=int(review['New_Service_Rating']), key = 'service' + str(index))
-            # ambience_rating = c5.number_input(f'Ambience Rating: {review["Feedback_Ambience_Rating"]}', min_value=1, max_value=5, value=int(review['New_Ambience_Rating']), key = 'ambience' + str(index))
-            # update dishoom label
-
-            # same with sac.rate
-
-
             value_map = {
                         5: 10,
                         4: 8,
@@ -565,20 +551,21 @@ class FeedBackHelper:
                ambience_rating = st.number_input(f'Ambience Rating: **{review["Feedback_Ambience_Rating"]}**', min_value=1, max_value=value_map[float(review['Feedback_Ambience_Rating']) if review['Feedback_Ambience_Rating'] not in nans_map else 5], value=int(review['New_Ambience_Rating']), key = 'ambience' + str(index)+venue)
                
             # update the review
-            review['New_Overall_Rating'] = str(overall_rating)
-            review['New_Food_Rating'] = str(food_rating)
-            review['New_Drink_Rating'] = str(drink_rating)
-            review['New_Service_Rating'] = str(service_rating)
-            review['New_Ambience_Rating'] = str(ambience_rating)
-            review['Label_Dishoom'] = ' - '.join(new_label)
-            review['Menu_Item'] = ' - '.join(new_food)
-            review['Drink_Item'] = ' - '.join(new_drink)
-            review['👍'] = '1' if is_best else 'False'
-            review['👎'] = '1' if is_worst else 'False'
-            review['💡'] = '1' if is_suggestion else 'False'
+
 
             # update the
             def OnUpdateButton(review):
+               review['New_Overall_Rating'] = str(overall_rating)
+               review['New_Food_Rating'] = str(food_rating)
+               review['New_Drink_Rating'] = str(drink_rating)
+               review['New_Service_Rating'] = str(service_rating)
+               review['New_Ambience_Rating'] = str(ambience_rating)
+               review['Label_Dishoom'] = ' - '.join(new_label)
+               review['Menu_Item'] = ' - '.join(new_food)
+               review['Drink_Item'] = ' - '.join(new_drink)
+               review['👍'] = '1' if is_best else 'False'
+               review['👎'] = '1' if is_worst else 'False'
+               review['💡'] = '1' if is_suggestion else 'False'
                if doc[0].to_dict() != review:
                   # with st.expander('Here the results'):
                   #    col1, col2 = st.columns(2)
