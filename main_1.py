@@ -392,7 +392,8 @@ class FeedBackHelper:
                st.write(f'**1** -> **1**')
 
       # 4. Prepare the dataframes
-      df = df[df['Reservation_Venue'] == venue] # filter by venue
+      if venue:
+         df = df[df['Reservation_Venue'] == venue] # filter by venue
       
       # take off empty detail
       df['Details'] = df['Details'].apply(lambda x: x.strip())
