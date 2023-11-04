@@ -430,7 +430,8 @@ class FeedBackHelper:
 
       index = c2.number_input('Choose the index', min_value=1, max_value=len(df_full), value = st.session_state.last_index, on_change=on_change_n)
 
-      edit_tab, venue_tab = st.tabs(['Edit', 'Venue Capacity'])
+
+      edit_tab, venue_tab = st.tabs([f'Edit {index}/{len(df_full)}', 'Venue Details'])
       
       with edit_tab:
          with st.form('scoring'):
