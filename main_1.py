@@ -367,7 +367,9 @@ class FeedBackHelper:
       c1,c2 = st.columns(2)
       
       def on_change(df):
-         df = df[df['Reservation_Venue'] == st.session_state.venue] # filter by venue
+         if 'venue' not in st.session_state:
+            st.session_state.venue = None
+         df = df[df['Reservation_Venue'] == st.session_state.venue 
 
       venue = c1.selectbox('Choose the venue', all_venues, key='venue', on_change = on_change(df))
 
