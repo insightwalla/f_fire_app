@@ -565,7 +565,6 @@ class FeedBackHelper:
                      service_rating = st.number_input(f'Service Rating: **{review["Feedback_Service_Rating"]}**', min_value=1, max_value=value_map[float(review['Feedback_Service_Rating']) if review['Feedback_Service_Rating'] not in nans_map  else 5], value=int(review['New_Service_Rating']), key = 'service' + str(index)+venue)
                   with c_am_r:
                      ambience_rating = st.number_input(f'Ambience Rating: **{review["Feedback_Ambience_Rating"]}**', min_value=1, max_value=value_map[float(review['Feedback_Ambience_Rating']) if review['Feedback_Ambience_Rating'] not in nans_map else 5], value=int(review['New_Ambience_Rating']), key = 'ambience' + str(index)+venue)
-                  c.rate(label=f'Ambience Rating: **{review["Feedback_Ambience_Rating"]}**', value=int(review['New_Ambience_Rating']), count=value_map[float(review['Feedback_Ambience_Rating']) if review['Feedback_Ambience_Rating'] not in nans_map else 5], key = 'ambience' + str(from_real_to_fake[index])+venue)
                   
             # update the review
             review['New_Overall_Rating'] = overall_rating
