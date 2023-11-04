@@ -395,9 +395,6 @@ class FeedBackHelper:
                st.write(f'**2** -> **1**')
                st.write(f'**1** -> **1**')
 
-      # 4. Prepare the dataframes
-      if venue:
-      
       # take off empty detail
       df['Details'] = df['Details'].apply(lambda x: x.strip())
       df_full = df[df['Details'] != 'nan']
