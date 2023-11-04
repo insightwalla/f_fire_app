@@ -510,9 +510,6 @@ class FeedBackHelper:
             def OnUpdateButton(review, index):
                with st.spinner('Updating review...'):
                   doc[0].reference.get().reference.update(review)
-                  # read the data 
-                  res = self.read(show= False)
-                  self.df = res['data']
                st.success('Review updated successfully')
             
             def OnDeleteSingleRev(index):
