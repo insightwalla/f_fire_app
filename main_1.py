@@ -389,6 +389,10 @@ class FeedBackHelper:
       # We want to avoid loosing the index when we filter the dataframe so we save the index in the session state
       if 'last_index' not in st.session_state:
          st.session_state.last_index = 1
+      
+      def on_change_n():
+         st.session_state.last_index = index
+         
       index = c2.number_input('Choose the index', min_value=1, max_value=len(df_full), value = st.session_state.last_index, key='index')
 
 
