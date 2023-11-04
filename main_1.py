@@ -445,9 +445,9 @@ class FeedBackHelper:
             #st.write('Fake index: ', index, 'Real index: ', from_real_to_fake[index])
             
             with st.spinner('Loading review...'):
-               st.write(index)
-               st.write(from_real_to_fake[index])
-               st.write(len(df_full))
+               # st.write(index)
+               # st.write(from_real_to_fake[index])
+               # st.write(len(df_full))
                doc = self.get_review_by_venue_and_idx(venue, from_real_to_fake[index], give_doc=True)
             try:
                review = doc[0].to_dict()
