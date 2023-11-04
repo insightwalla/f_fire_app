@@ -608,7 +608,6 @@ class FeedBackHelper:
       res = self.read(show= False)
       df = res['data']
       all_venues =  ['All'] + res['all_venues']
-      df = pd.DataFrame(data_list)
       if len(df) == 0:  
          st.info('No data found - Please select Upload to upload the data')
          st.stop()
