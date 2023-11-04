@@ -471,8 +471,8 @@ class FeedBackHelper:
             value_map = {
                         5: 10,
                         4: 8,
-                           3: 7,
-                              2: 5,
+                           3: 5,
+                              2: 1,
                               1: 1,
                               0:'nan'
                         }
