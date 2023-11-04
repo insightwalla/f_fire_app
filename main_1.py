@@ -352,6 +352,7 @@ class FeedBackHelper:
             st.balloons()
             st.info('All Done - You can go at the scoring section now! 😊')
             st.session_state = {}   
+            st.stop()
 
       upload = upload_space.button('Upload', type='primary', use_container_width=True, on_click=handle_upload)
    
