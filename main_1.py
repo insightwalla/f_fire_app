@@ -365,7 +365,7 @@ class FeedBackHelper:
       # 2. Create the selectbox for the venue
       all_venues = res['all_venues']
       c1,c2 = st.columns(2)
-      venue = c1.selectbox('Choose the venue', all_venues, key='venue')
+      venue = c1.selectbox('Choose the venue', all_venues, key='venue', index = all_venues.index(st.session_state.venue) if st.session_state else 0)
 
       # 3. Create the delete button
       def OnDeleteVenueRevs(name):
