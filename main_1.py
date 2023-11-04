@@ -245,6 +245,10 @@ class FeedBackHelper:
          if suggestions:
             df = df[df['💡'] == '1']
 
+         if len(df) == 0:
+            st.info('No reviews found!')
+            st.stop()
+
          
 
       if 'venue' not in st.session_state:
