@@ -572,9 +572,9 @@ class FeedBackHelper:
                   #    col1.write(doc[0].to_dict())
                   #    col2.write(review)
                   doc[0].reference.update(review)
-                  c2.success('Update Complete')
+                  c2_button.success('Update Complete')
                else:
-                  st.info('Nothing to Update')
+                  c2_button.info('Nothing to Update')
                
             def OnDeleteSingleRev():
                with st.spinner('Deleting review...'):
