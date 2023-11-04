@@ -575,7 +575,6 @@ class FeedBackHelper:
                   st.success('Update Complete')
                else:
                   st.info('Nothing to Update')
-               st.rerun()
                
             def OnDeleteSingleRev():
                with st.spinner('Deleting review...'):
@@ -584,7 +583,6 @@ class FeedBackHelper:
             
             if c1_button.form_submit_button('Update', type='primary', use_container_width=True):
                   OnUpdateButton(review)
-                  st.stop()
 
                
             if c2_button.form_submit_button('Delete', type='secondary', use_container_width=True):
