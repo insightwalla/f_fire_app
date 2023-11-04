@@ -223,7 +223,7 @@ class FeedBackHelper:
 
       with st.sidebar.expander('Filters'):
          # filter by sentiment
-         sentiment = st.selectbox('Choose the sentiment', ['All', 'Positive', 'Negative'], key='sentiment', index=0)
+         sentiment = st.selectbox('Choose the sentiment', ['All', 'POSITIVE', 'NEGATIVE'], key='sentiment', index=0)
          if sentiment != 'All':
             df = df[df['Sentiment'] == sentiment]
 
