@@ -573,6 +573,7 @@ class FeedBackHelper:
                   #    col2.write(review)
                   doc[0].reference.update(review)
                   st.success('Update Complete')
+                  st.rerun()
                else:
                   st.info('Nothing to Update')
                
