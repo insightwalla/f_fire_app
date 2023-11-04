@@ -610,8 +610,8 @@ class FeedBackHelper:
       venue = st.selectbox('Select the Venue', options = all_venues, index = 0)
       if venue != 'All':
          df = df[df['Reservation_Venue'] == venue]
-      name_file = c2.text_input('data', value ='labelled_reviews' if venue == 'All' else f'labelled_rev_{venue}')
       
+      name_file = c2.text_input('File Name', value ='labelled_reviews' if venue == 'All' else f'labelled_rev_{venue}')
       @st.cache
       def convert_df(df):
          # IMPORTANT: Cache the conversion to prevent computation on every rerun
@@ -624,7 +624,9 @@ class FeedBackHelper:
          data=csv,
          file_name=name_file,
          mime='text/csv',
+         type = 'primary'
       )
+      st.write(df)
 
 
 
