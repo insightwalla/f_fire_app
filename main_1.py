@@ -791,23 +791,18 @@ class FeedBackHelper:
             self.edit()
             st.stop()
       elif choice == 'Upload':
-         with st.spinner('Loading Upload...'):
             self.upload_excels()
             st.stop()
       elif choice == 'Download':
-         with st.spinner('Loading Download...'):
             self.download()
             st.stop()
       elif choice == 'AI Assistant':
-         with st.spinner('Loading AI Assistant...'):
             self.ai_assistant()
             st.stop()
       elif choice == 'Reporting':
-         with st.spinner('Loading Reporting...'):
             self.reporting()
             st.stop()
       elif choice == 'Settings':
-         with st.spinner('Loading Settings...'):
             self.settings()
             st.stop()
 
