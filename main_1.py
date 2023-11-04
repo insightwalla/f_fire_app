@@ -579,10 +579,15 @@ class FeedBackHelper:
             review['💡'] = '1' if is_suggestion else '0'
 
             # update the
-            def OnUpdateButton(review):
-                  doc[0].reference.get().reference.update(review)
-                  st.success('Update Complete')
-
+            if doc[0].to_dict() != review:
+               with st.expander('Here the results'):
+                  c1,c2 = st.columns(2)
+                  c1.write(doc[0].to_dict())
+                  c2.write(review)
+               if c1_button.form_submit_button('Update', type='primary', use_container_width=True):
+                  OnUpdateButton(review, index)
+            else:
+               st.info('Nothing to update')
             
             def OnDeleteSingleRev():
                with st.spinner('Deleting review...'):
