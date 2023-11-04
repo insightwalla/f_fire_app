@@ -170,6 +170,15 @@ class FeedBackHelper:
          pass
       self.db = firestore.client()
       #st.success('Connected to Firestore')
+   
+   def get_review_by_venue_and_idx(self, venue, idx, give_doc = False):
+      notes_ref = self.db.collection(u'feedback').document(venue).collection(u'reviews')
+      query = notes_ref.where('idx', '==', str(idx))
+      results = query.get()
+      if give_doc:
+         return results
+      else:
+         return [result.to_dict() for result in results][0]
 
    def read(self, show = True):
       '''
@@ -307,15 +316,18 @@ class FeedBackHelper:
 
       upload = upload_space.button('Upload', type='primary', use_container_width=True, on_click=handle_upload)
    
+   
    def edit(self):
+      # 1. Read the data from the database
       res = self.read(show= False)
-      df = res['data']
+      self.df = res['data']
+      df = self.df
+      # 2. Create the selectbox for the venue
       all_venues = res['all_venues']
-
-      # create a selectbox to choose the venue
       c1,c2 = st.columns(2)
       self.venue = c1.selectbox('Choose the venue', all_venues, key='venue')
-
+      venue = self.venue
+      # 3. Create the delete button
       def OnDeleteVenueRevs(name):
             # check if the doc exists
             doc_ref = self.db.collection(u'feedback').document(name)
@@ -333,44 +345,54 @@ class FeedBackHelper:
       if st.sidebar.button(f'Delete {self.venue}', type = 'primary', use_container_width=True):
          OnDeleteVenueRevs(self.venue)
 
-      venue = self.venue
-      # get the data for the venue
-      df = df[df['Reservation_Venue'] == self.venue]
-
-      # strip the space in details
+      # 4. Prepare the dataframes
+      df = df[df['Reservation_Venue'] == self.venue] # filter by venue
+      
+      # take off empty detail
       df['Details'] = df['Details'].apply(lambda x: x.strip())
       df_full = df[df['Details'] != 'nan']
       list_of_index_full = df_full['idx'].unique().tolist()
-      # st.write(len(df_full))
-      # st.write(df_full)
-      # st.write(len(list_of_index_full))
+
+      # Now we have a dataframe that look like this
+      # | idx  | Details | 👍 | 👎  | 💡 |
+      # |  10  |  ...    | 1  | 0  | 0  |
+      # |  12  |  ...    | 0  | 1  | 0  |
+      # |  81  |  ...    | 0  | 0  | 1  |
+      # |  91  |  ...    | 1  | 0  | 0  |
+
+      # We want to allow the user to select the index of the reviews that he wants to edit
+      # but we need to map the indexes to allow the user to select from a range(1, len(df_full) 
+      # instead of a list of indexes that are not consecutive, so we create a dictionary to map
+      # the indexes from the fake ones to the real ones 
+      # so when we select 1, we will get the index 10 -> # | idx  | Details | 👍 | 👎  | 💡 |
+      #                                                    |  10  |  ...    | 1  | 0  | 0  |
+      # and when we select 2, we will get the index 12 -> # | idx  | Details | 👍 | 👎  | 💡 |
+      #                                                    |  12  |  ...    | 0  | 1  | 0  | 
+
       from_real_to_fake = {i+1 : index for i, index in enumerate(list_of_index_full)}
-      #st.write('All Data', len(df), 'Data with Details', len(df_full))
+
+      # 5
+      # We want to avoid loosing the index when we filter the dataframe so we save the index in the session state
       if 'last_index' not in st.session_state:
          st.session_state.last_index = 1
       index = c2.number_input('Choose the index', min_value=1, max_value=len(df_full), value = st.session_state.last_index, key='index')
 
-      def get_review_by_venue_and_idx(venue, idx, give_doc = False):
-         notes_ref = self.db.collection(u'feedback').document(venue).collection(u'reviews')
-         query = notes_ref.where('idx', '==', str(idx))
-         results = query.get()
-         res = [result.to_dict() for result in results] 
-         if give_doc:
-            return results
-         else:
-            return res[0] if res else None
+
       
-      tab1, tab2 = st.tabs(['Edit', 'Venue Capacity'])
-      with tab1:
+      edit_tab, venue_tab = st.tabs(['Edit', 'Venue Capacity'])
+      with edit_tab:
          with st.form('scoring'):
             col_buttons = st.columns(5)
             c1_button = col_buttons[4]
             c2_button = col_buttons[0]
+
+
             #st.write(index, from_real_to_fake[index])
             #st.write(from_real_to_fake)
             #st.write('Fake index: ', index, 'Real index: ', from_real_to_fake[index])
+            
             with st.spinner('Loading review...'):
-               doc = get_review_by_venue_and_idx(venue, from_real_to_fake[index], give_doc=True)
+               doc = self.get_review_by_venue_and_idx(venue, from_real_to_fake[index], give_doc=True)
             try:
                review = doc[0].to_dict()
             except:
@@ -401,8 +423,11 @@ class FeedBackHelper:
 
             nans_map = ['nan', 0, '0', '']
             with st.spinner('Creating Cards...'):
-               c1,c2,c3 = st.columns(3)
-               # get all the best 
+               col_best,col_worst,col_sugg = st.columns(3)
+               col_food,col_drinks = st.columns(2)
+               c_ov_r,c_fo_r,c_dr_r,c_se_r,c_am_r = st.columns(5)
+
+               # get all the informations
                best_rev = df_full[df_full['👍'] == '1']
                worst_rev = df_full[df_full['👎'] == '1']
                suggestions_rev = df_full[df_full['💡'] == '1']
@@ -412,48 +437,60 @@ class FeedBackHelper:
 
                if len(best_rev) == 3 and not is_this_best:
                   is_best = False
-                  c1.write('You have already selected 3 best reviews')
+                  col_best.write('You have already selected 3 best reviews')
                else:
-                  is_best = c1.toggle('👍',review['👍'] == '1', key = f'is_good{index}={venue}')
+                  is_best = col_best.toggle('👍',review['👍'] == '1', key = f'is_good{index}={venue}')
 
                if len(worst_rev) == 3 and not is_this_worst:
                   is_worst = False
-                  c2.write('You have already selected 3 worst reviews')
+                  col_worst.write('You have already selected 3 worst reviews')
                else:
-                  is_worst = c2.toggle('👎',review['👎'] == '1', key= f'is_bad{index}={venue}')
+                  is_worst = col_worst.toggle('👎',review['👎'] == '1', key= f'is_bad{index}={venue}')
 
                if len(suggestions_rev) == 3 and not is_this_suggestion:
                   is_suggestion = False
-                  c3.write('You have already selected 3 suggestions')
+                  col_sugg.write('You have already selected 3 suggestions')
                else:
-                  is_suggestion = c3.toggle('💡',review['💡'] == '1', key= f'is_suggestion{index}={venue}')
+                  is_suggestion = col_sugg.toggle('💡',review['💡'] == '1', key= f'is_suggestion{index}={venue}')
 
-               label_dishoom = review['Label_Dishoom'].split('-') if '-' in review['Label_Dishoom'] else [review['Label_Dishoom']]
-               label_dishoom = [l.strip() for l in label_dishoom if l != '']
+               def clean_column_entries(review, col_name):
+                  '''
+                  This function will clean the column entries
+                  example:
+                  'Menu_Item': 'Chicken Ruby - House Black Daal - Dishoom Calamaris'
 
-               # food items
-               food_items = review['Menu_Item'].split('-') if '-' in review['Menu_Item'] else [review['Menu_Item']]
-               food_items = [l.strip() for l in food_items if l != '']
+                  will become:
+                  ['Chicken Ruby', 'House Black Daal', 'Dishoom Calamari']
+                  '''
+                  col_values = review[col_name]
+                  col_values = col_values.split('-') if '-' in col_values else [col_values]
+                  col_values = [l.strip() for l in col_values if l != '']
+                  return col_values
 
-               # drink items
-               drink_items = review['Drink_Item'].split('-') if '-' in review['Drink_Item'] else [review['Drink_Item']]
-               drink_items = [l.strip() for l in drink_items if l != '']
+               new_food = col_food.multiselect('Food Items', 
+                                               menu_items_lookup, 
+                                               default=clean_column_entries(review, 'Menu_Item'), 
+                                               key= 'food_item' + str(index)+venue)
+               
+               new_drink = col_drinks.multiselect('Drink Items',
+                                                   drink_items_lookup, 
+                                                   default=clean_column_entries(review, 'Drink_Item'), 
+                                                   key='drink_item' + str(index)+venue)
+               
+               new_label = st.multiselect('Label Dishoom',
+                                          options_for_classification, 
+                                          default=clean_column_entries(review, 'Label_Dishoom'), 
+                                          key='label' + str(index)+venue)
 
-               c1,c2 = st.columns(2)
-               new_food = c1.multiselect('Food Items', menu_items_lookup, default=food_items, key='food_item' + str(index)+venue)
-               new_drink = c2.multiselect('Drink Items', drink_items_lookup, default=drink_items, key='drink_item' + str(index)+venue)
-               new_label = st.multiselect('Label Dishoom', options_for_classification, default=label_dishoom, key='label' + str(index)+venue)
-               c1,c2,c3,c4,c5 = st.columns(5)
-
-               with c1:
+               with c_ov_r:
                   overall_rating = sac.rate(label=f'Overall Rating: **{review["Overall_Rating"]}**', value=int(review['New_Overall_Rating']), count=value_map[float(review['Overall_Rating']) if review['Overall_Rating'] not in nans_map else 5], key = 'overall' + str(index)+venue)
-               with c2:
+               with c_fo_r:
                   food_rating = sac.rate(label=f'Food Rating: **{review["Feedback_Food_Rating"]}**', value=int(review['New_Food_Rating']), count=value_map[float(review['Feedback_Food_Rating']) if review['Feedback_Food_Rating']not in nans_map else 5], key = 'food' + str(index)+venue)
-               with c3:
+               with c_dr_r:
                   drink_rating = sac.rate(label=f'Drink Rating: **{review["Feedback_Drink_Rating"]}**', value=int(review['New_Drink_Rating']), count=value_map[float(review['Feedback_Drink_Rating']) if review['Feedback_Drink_Rating']not in nans_map else 5], key = 'drink' + str(index)+venue)
-               with c4:
+               with c_se_r:
                   service_rating = sac.rate(label=f'Service Rating: **{review["Feedback_Service_Rating"]}**', value=int(review['New_Service_Rating']), count=value_map[float(review['Feedback_Service_Rating']) if review['Feedback_Service_Rating'] not in nans_map  else 5], key = 'service' + str(index)+venue)
-               with c5:
+               with c_am_r:
                   ambience_rating = sac.rate(label=f'Ambience Rating: **{review["Feedback_Ambience_Rating"]}**', value=int(review['New_Ambience_Rating']), count=value_map[float(review['Feedback_Ambience_Rating']) if review['Feedback_Ambience_Rating'] not in nans_map else 5], key = 'ambience' + str(index)+venue)
                   
             # update the review
@@ -469,11 +506,13 @@ class FeedBackHelper:
             review['👎'] = '1' if is_worst else '0'
             review['💡'] = '1' if is_suggestion else '0'
 
-
             # update the
             def OnUpdateButton(review, index):
                with st.spinner('Updating review...'):
                   doc[0].reference.get().reference.update(review)
+                  # read the data 
+                  res = self.read(show= False)
+                  self.df = res['data']
                st.success('Review updated successfully')
             
             def OnDeleteSingleRev(index):
@@ -486,8 +525,8 @@ class FeedBackHelper:
             
             if c2_button.form_submit_button('Delete', type='secondary', use_container_width=True):
                OnDeleteSingleRev(index)   
-      with tab2:
-         try:
+      
+      with venue_tab:
             venue_map = {
                'Dishoom Covent Garden': 1,
                'Dishoom Shoreditch': 2,
@@ -504,11 +543,8 @@ class FeedBackHelper:
             store_id = venue_map[venue]
             date = review['Reservation_Date']
             time = review['Reservation_Time']
-            get_sales_date(store_id= [store_id], date = date, time = time)
-            st.stop()
-         except:
-            st.write('No time specified')
-            st.stop()
+            #get_sales_date(store_id= [store_id], date = date, time = time)
+        
    def download(self):
       st.write('Download')
       
