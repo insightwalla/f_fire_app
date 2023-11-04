@@ -503,8 +503,10 @@ class FeedBackHelper:
             date = review['Reservation_Date']
             time = review['Reservation_Time']
             get_sales_date(store_id= [store_id], date = date, time = time)
+            st.stop()
          except:
             st.write('No time specified')
+            st.stop()
    def download(self):
       st.write('Download')
       
