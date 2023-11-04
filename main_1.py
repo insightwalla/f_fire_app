@@ -607,7 +607,7 @@ class FeedBackHelper:
       
       res = self.read(show= False)
       df = res['data']
-      all_venues =  []'All'] + res['all_venues']
+      all_venues =  ['All'] + res['all_venues']
       df = pd.DataFrame(data_list)
       if len(df) == 0:  
          st.info('No data found - Please select Upload to upload the data')
@@ -616,7 +616,7 @@ class FeedBackHelper:
       venue = st.selectbox('Select the Venue', options = all_venues, index = 0)
       if venue != 'All':
          df = df[df['Reservation_Venue'] == venue]
-         
+
       st.write(df)
 
       name_file = st.text_input('data')
