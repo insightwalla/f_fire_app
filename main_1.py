@@ -673,7 +673,6 @@ class FeedBackHelper:
       4. Create a container for each sentiment
       5. Create a delete button
       '''
-      
       data_list = []
       data = self.db.collection('feedback').stream()
 
@@ -748,14 +747,17 @@ class FeedBackHelper:
                with tab_good:
                   for good in thumbs_up['Details'].tolist():
                      st.write(good)
+                     st.write('---')
 
                with tab_bad:
                   for bad in thumbs_down['Details'].tolist():
                      st.write(bad)
+                     st.write('---')
 
                with tab_sugg:
                   for sugg in suggestions['Details'].tolist():
                      st.write(sugg)
+                     st.write('---')
 
                with tab_g:
                   create_chart_totals_labels(venue_data_to_lab, st.container())
