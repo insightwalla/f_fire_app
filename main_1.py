@@ -377,6 +377,7 @@ class FeedBackHelper:
       c1,c2 = st.columns(2)
       self.venue = c1.selectbox('Choose the venue', all_venues, key='venue')
       venue = self.venue
+      st.session_state.venue = venue
       # 3. Create the delete button
       def OnDeleteVenueRevs(name):
             # check if the doc exists
