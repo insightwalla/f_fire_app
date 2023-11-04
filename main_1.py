@@ -566,17 +566,17 @@ class FeedBackHelper:
                ambience_rating = st.number_input(f'Ambience Rating: **{review["Feedback_Ambience_Rating"]}**', min_value=1, max_value=value_map[float(review['Feedback_Ambience_Rating']) if review['Feedback_Ambience_Rating'] not in nans_map else 5], value=int(review['New_Ambience_Rating']), key = 'ambience' + str(index)+venue)
                
             # update the review
-            review['New_Overall_Rating'] = overall_rating
-            review['New_Food_Rating'] = food_rating
-            review['New_Drink_Rating'] = drink_rating
-            review['New_Service_Rating'] = service_rating
-            review['New_Ambience_Rating'] = ambience_rating
+            review['New_Overall_Rating'] = str(overall_rating)
+            review['New_Food_Rating'] = str(food_rating)
+            review['New_Drink_Rating'] = str(drink_rating)
+            review['New_Service_Rating'] = str(service_rating)
+            review['New_Ambience_Rating'] = str(ambience_rating)
             review['Label_Dishoom'] = ' - '.join(new_label)
             review['Menu_Item'] = ' - '.join(new_food)
             review['Drink_Item'] = ' - '.join(new_drink)
-            review['👍'] = '1' if is_best else '0'
-            review['👎'] = '1' if is_worst else '0'
-            review['💡'] = '1' if is_suggestion else '0'
+            review['👍'] = '1' if is_best else 'False'
+            review['👎'] = '1' if is_worst else 'False'
+            review['💡'] = '1' if is_suggestion else 'False'
 
             # update the
             def OnUpdateButton(review):
@@ -594,9 +594,11 @@ class FeedBackHelper:
                   col1, col2 = st.columns(2)
                   col1.write(doc[0].to_dict())
                   col2.write(review)
-                  
+
                if c1_button.form_submit_button('Update', type='primary', use_container_width=True):
                      OnUpdateButton(review)
+            else:
+               st.info('Nothing to Update')
                
             if c2_button.form_submit_button('Delete', type='secondary', use_container_width=True):
                OnDeleteSingleRev()   
