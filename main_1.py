@@ -597,11 +597,21 @@ class FeedBackHelper:
       c1,c2,c3 = st.columns([0.3,0.5, 0.2])
 
       c1.subheader('Download')
-      
-      res = self.read(show= False)
-      df = res['data']
+      data_list = []
+      data = self.db.collection('feedback').stream()
 
-      all_venues =  ['All'] + res['all_venues']
+      for doc in data:
+         reviews = self.db.collection(u'feedback').document(doc.id).collection(u'reviews').stream()
+         for review in reviews:
+            data_list.append(review.to_dict())
+
+      df = pd.DataFrame(data_list)
+      if len(df) == 0:  
+         st.info('No data found - Please select Upload to upload the data')
+         st.stop()
+      df = df.sort_values(by=['idx'])
+      all_venues = df['Reservation_Venue'].unique().tolist()
+      all_venues =  ['All'] + all_venues
       if len(df) == 0:  
          st.info('No data found - Please select Upload to upload the data')
          st.stop()
