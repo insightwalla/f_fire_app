@@ -600,7 +600,7 @@ class FeedBackHelper:
       
       res = self.read(show= False)
       df = res['data']
-      
+
       all_venues =  ['All'] + res['all_venues']
       if len(df) == 0:  
          st.info('No data found - Please select Upload to upload the data')
@@ -619,17 +619,12 @@ class FeedBackHelper:
 
       csv = convert_df(df)
 
-      st.download_button(
+      c3.download_button(
          label="Download data as CSV",
          data=csv,
          file_name=name_file,
          mime='text/csv',
       )
-
-      # create a download button
-      if st.download_button(label='Download', data=df.to_csv(index=False), file_name='labelled_reviews.csv', mime='text/csv'):
-         st.write('Downloaded')
-      st.write(df)
 
 
 
