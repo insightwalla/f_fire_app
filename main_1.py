@@ -826,14 +826,6 @@ class FeedBackHelper:
 
    def run(self):
       choice = self.create_sidebar_menu()
-      if choice == 'Feedback':
-         if self.df is None:
-               res = self.read(show= False)
-               self.plot(res['data'])
-               st.stop()  
-         else:
-            self.plot(self.df)
-            st.stop()
       if choice == 'Scoring':
             self.edit()
             st.stop()
@@ -847,6 +839,9 @@ class FeedBackHelper:
             self.ai_assistant()
             st.stop()
       elif choice == 'Reporting':
+            res = self.read(show= False)
+            self.plot(res['data'])
+            st.stop() 
             self.reporting()
             st.stop()
       elif choice == 'Settings':
