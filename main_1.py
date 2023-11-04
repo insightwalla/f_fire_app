@@ -228,7 +228,7 @@ class FeedBackHelper:
             df = df[df['Sentiment'] == sentiment]
 
          # add toggle for searching only the ones negative with empty label
-         only_negative_empty = st.checkbox('Only Negative Empty', key='only_negative_empty')
+         only_negative_empty = st.toggle('Only Negative Empty', key='only_negative_empty')
          if only_negative_empty:
             df = df[(df['Sentiment'] == 'NEGATIVE') & (df['Label_Dishoom'] == '')]
 
