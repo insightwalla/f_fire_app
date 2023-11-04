@@ -612,11 +612,12 @@ class FeedBackHelper:
       df = df.sort_values(by=['idx'])
       all_venues = df['Reservation_Venue'].unique().tolist()
       all_venues =  ['All'] + all_venues
+      
       if len(df) == 0:  
          st.info('No data found - Please select Upload to upload the data')
          st.stop()
       df = df.sort_values(by=['idx'])
-      st.write(f'{len(df)} Reviews')
+      
       venue = st.selectbox('Select the Venue', options = all_venues, index = 0)
       if venue != 'All':
          df = df[df['Reservation_Venue'] == venue]
@@ -636,7 +637,13 @@ class FeedBackHelper:
          mime='text/csv',
          type = 'primary'
       )
-      st.write(df)
+      st.write(f'{len(df)} Reviews')
+      tab1, tab2 = st.tabs(['Dataframe', 'Informations'])
+      with tab1:
+         st.write(df)
+      with tab2:
+         self.plot(df)
+
       st.stop()
 
    def ai_assistant(self):
