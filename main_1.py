@@ -582,11 +582,11 @@ class FeedBackHelper:
             # update the
             def OnUpdateButton(review):
                if doc[0].to_dict() != review:
-                  with st.expander('Here the results'):
-                     col1, col2 = st.columns(2)
-                     col1.write(doc[0].to_dict())
-                     col2.write(review)
-                  doc[0].reference.get().reference.update(review)
+                  # with st.expander('Here the results'):
+                  #    col1, col2 = st.columns(2)
+                  #    col1.write(doc[0].to_dict())
+                  #    col2.write(review)
+                  doc[0].reference.update(review)
                   st.success('Update Complete')
                else:
                   st.info('Nothing to Update')
