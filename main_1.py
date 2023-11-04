@@ -210,11 +210,13 @@ class FeedBackHelper:
       self.all_data = df
       df_empty = df[df['Details'] == 'nan']
       df = df[df['Details'] != 'nan']
-      
+      df_empty = rescoring_empty(df_empty, new=True)
+
       # adds search bar
       search = st.sidebar.text_input('Search', key='search')
       if search != '':
          df = df[df['Details'].str.contains(search, case=False)]
+         df_empty = pd.Dataframe()
          if len(df) == 0:
             st.info('No reviews Found')
             st.stop()
@@ -227,7 +229,6 @@ class FeedBackHelper:
             st.session_state.venue = None
 
       self.venue = st.session_state.venue
-      df_empty = rescoring_empty(df_empty, new=True)
       create_container_for_each_sentiment(df, df_empty)
       self.plot(df)
 
