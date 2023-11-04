@@ -430,6 +430,7 @@ class FeedBackHelper:
       index = c2.number_input('Choose the index', min_value=1, max_value=len(df_full), value = st.session_state.last_index, on_change=on_change_n)
 
       edit_tab, venue_tab = st.tabs(['Edit', 'Venue Capacity'])
+      
       with edit_tab:
          with st.form('scoring'):
             col_buttons = st.columns(5)
@@ -444,6 +445,7 @@ class FeedBackHelper:
             with st.spinner('Loading review...'):
                st.write(index)
                st.write(from_real_to_fake[index])
+               st.write(len(df_full))
                doc = self.get_review_by_venue_and_idx(venue, from_real_to_fake[index], give_doc=True)
             try:
                review = doc[0].to_dict()
@@ -559,7 +561,7 @@ class FeedBackHelper:
             review['💡'] = '1' if is_suggestion else '0'
 
             # update the
-            def OnUpdateButton(review, index):
+            def OnUpdateButton(review):
                with st.spinner('Updating review...'):
                   doc[0].reference.get().reference.update(review)
                st.success('Review updated successfully')
