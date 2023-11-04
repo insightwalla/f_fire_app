@@ -599,3 +599,5 @@ def get_sales_date(store_id, date, time = None):
       if time is not None and time!= 'nan':
          fig.add_vline(x=time, line_width=10, line_color="red", opacity=0.3)
       st.plotly_chart(fig, use_container_width = True)
+   except:
+      st.info('We cant display the data')
