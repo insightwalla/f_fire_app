@@ -594,7 +594,7 @@ class FeedBackHelper:
             st.stop()
         
    def download(self):
-      st.write('Download')
+      st.subheader('Download')
       
       def get_table_download_link(data, name_file):
          # rename the columns that have emoji
@@ -605,19 +605,19 @@ class FeedBackHelper:
          href = f'<a href="data:file/csv;base64,{b64}" download="{name_file}.csv">Download File as ({name_file})</a>'
          return href
       
-      data_list = []
-      data = self.db.collection('feedback').stream()
-
-      for doc in data:
-         reviews = self.db.collection(u'feedback').document(doc.id).collection(u'reviews').stream()
-         for review in reviews:
-            data_list.append(review.to_dict())
-
+      res = self.read(show= False)
+      df = res['data']
+      all_venues =  []'All'] + res['all_venues']
       df = pd.DataFrame(data_list)
       if len(df) == 0:  
          st.info('No data found - Please select Upload to upload the data')
          st.stop()
       df = df.sort_values(by=['idx'])
+      venue = st.selectbox('Select the Venue', options = all_venues, index = 0)
+      if venue != 'All':
+         df = df[df['Reservation_Venue'] == venue]
+         
+      st.write(df)
 
       name_file = st.text_input('data')
       if st.button('Download Data'):
