@@ -740,8 +740,7 @@ class FeedBackHelper:
       choice = self.create_sidebar_menu()
       if choice == 'Feedback':
          if self.df is None:
-            with st.spinner('Loading Feedback...'):
-               self.read()
+               self.read(show = False)
                st.stop()  
 
       if choice == 'Scoring':
