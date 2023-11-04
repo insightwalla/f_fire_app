@@ -575,6 +575,7 @@ class FeedBackHelper:
                   st.success('Update Complete')
                else:
                   st.info('Nothing to Update')
+               st.rerun()
                
             def OnDeleteSingleRev():
                with st.spinner('Deleting review...'):
