@@ -743,7 +743,6 @@ class FeedBackHelper:
                st.stop()  
 
       if choice == 'Scoring':
-         with st.spinner('Loading Scoring...'):
             self.edit()
             st.stop()
       elif choice == 'Upload':
