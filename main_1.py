@@ -216,7 +216,7 @@ class FeedBackHelper:
       search = st.sidebar.text_input('Search', key='search')
       if search != '':
          df = df[df['Details'].str.contains(search, case=False)]
-         df_empty = pd.Dataframe()
+         df_empty = pd.DataFrame()
          if len(df) == 0:
             st.info('No reviews Found')
             st.stop()
