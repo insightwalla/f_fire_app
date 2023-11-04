@@ -365,11 +365,12 @@ class FeedBackHelper:
       # 2. Create the selectbox for the venue
       all_venues = res['all_venues']
       c1,c2 = st.columns(2)
+
+      if 'venue' not in st.session_state:
+            st.session_state.venue = None
       
       def on_change_v(df):
-         if 'venue' not in st.session_state:
-            st.session_state.venue = None
-         df = df[df['Reservation_Venue'] == st.session_state.venue]
+         df = df[df['Reservation_Venue'] == st.session_state.venue if st.session_state != None else all_venues[0]]
 
       venue = c1.selectbox(label = 'Choose the venue',
                             options = all_venues,
