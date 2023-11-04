@@ -629,9 +629,6 @@ class FeedBackHelper:
       st.write(df)
       st.stop()
 
-
-
-
    def ai_assistant(self):
       if 'data' not in st.session_state:
 
