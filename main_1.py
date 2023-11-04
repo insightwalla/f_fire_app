@@ -367,11 +367,11 @@ class FeedBackHelper:
    def edit(self):
       res = self.read(show= False)
       with st.sidebar.expander('Ratings Info'):
-         st.write(f'**5** : **10**')
-         st.write(f'**4** : **8**')
-         st.write(f'**3** : **5**')
-         st.write(f'**2** : **1**')
-         st.write(f'**1** : **1**')
+         st.write(f'**5** -> **10**')
+         st.write(f'**4** -> **8**')
+         st.write(f'**3** -> **5**')
+         st.write(f'**2** -> **1**')
+         st.write(f'**1** -> **1**')
 
 
       # 1. Read the data from the database
