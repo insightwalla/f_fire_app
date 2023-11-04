@@ -169,6 +169,7 @@ class FeedBackHelper:
       except:
          pass
       self.db = firestore.client()
+      self.df = None
       #st.success('Connected to Firestore')
    
    def get_review_by_venue_and_idx(self, venue, idx, give_doc = False):
