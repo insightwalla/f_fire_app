@@ -237,7 +237,6 @@ class FeedBackHelper:
          thumbs_down = st.toggle('Show Thumbs Down', key='thumbs_down_filter')
          suggestions = st.toggle('Show Suggestions', key='suggestions_filter')
 
-
          if thumbs_up:
             df = df[df['👍'] == '1']
          if thumbs_down:
@@ -356,11 +355,9 @@ class FeedBackHelper:
    
    def edit(self):
       res = self.read(show= False)
-      
-
       # 1. Read the data from the database
-
       self.df = res['data']
+      
       df = self.df
       # 2. Create the selectbox for the venue
       all_venues = res['all_venues']
@@ -375,14 +372,16 @@ class FeedBackHelper:
             doc_ref = self.db.collection(u'feedback').document(name)
             doc = doc_ref.get()
             if doc.exists:
-               st.write('Document already exists')
                # delete the collection
                reviews = self.db.collection(u'feedback').document(name).collection(u'reviews').stream()
+               how_many = len([review for review in reviews])
+               my_progress_bar = st.progress(0, text=f'Deleting 0/{how_many}')
                for i, review in enumerate(reviews):
                   self.db.collection(u'feedback').document(name).collection(u'reviews').document(review.id).delete()
+                  my_progress_bar.progress(int((i+1) * 100/how_many), text=f'Deleting {i+1}/{how_many}')
                # now delete the doc
                self.db.collection(u'feedback').document(name).delete()
-               st.write('Deleted Data for ', name)
+               my_progress_bar.progress(100, text=f'Deleted {how_many}/{how_many}')
 
       if st.sidebar.button(f'Delete **{venue}**', type = 'primary', use_container_width=True):
          OnDeleteVenueRevs(venue)
@@ -875,6 +874,7 @@ class FeedBackHelper:
 
 if __name__ == "__main__":
    from login_script import login
+   
    def main(name_user):
       try: 
          fb = FeedBackHelper(name_user)
