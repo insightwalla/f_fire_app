@@ -275,7 +275,7 @@ class FeedBackHelper:
       all_venues = df['Reservation_Venue'].unique().tolist()
       
       if delete_all_data:
-         with st.spinner('Removing All Data')
+         with st.spinner('Removing All Data'):
             for venue in all_venues:
                OnDeleteVenueRevs(venue)
          st.success('All data deleted successfully')
