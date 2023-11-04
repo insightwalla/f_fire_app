@@ -366,7 +366,7 @@ class FeedBackHelper:
       all_venues = res['all_venues']
       c1,c2 = st.columns(2)
       
-      def on_change_v(df = df):
+      def on_change_v(df):
          if 'venue' not in st.session_state:
             st.session_state.venue = None
          df = df[df['Reservation_Venue'] == st.session_state.venue]
