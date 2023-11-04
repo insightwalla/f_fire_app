@@ -188,15 +188,15 @@ class FeedBackHelper:
       4. Create a container for each sentiment
       5. Create a delete button
       '''
-      df = pd.DataFrame()
+      data_list = []
       data = self.db.collection('feedback').stream()
+
       for doc in data:
          reviews = self.db.collection(u'feedback').document(doc.id).collection(u'reviews').stream()
-         for i, review in enumerate(reviews):
-            #st.write(review.to_dict())
-            # make it a dataframe
-            df = pd.concat([df, pd.DataFrame(review.to_dict(), index=[i])], axis=0)
-            # sort by idx
+         for review in reviews:
+            data_list.append(review.to_dict())
+
+      df = pd.DataFrame(data_list)
       if len(df) == 0:  
          st.info('No data found - Please select Upload to upload the data')
          st.stop()
