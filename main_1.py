@@ -594,7 +594,9 @@ class FeedBackHelper:
             st.stop()
         
    def download(self):
-      st.subheader('Download')
+      c1,c2 = st.columns()
+
+      c1.subheader('Download')
       
       def get_table_download_link(data, name_file):
          # rename the columns that have emoji
@@ -612,15 +614,16 @@ class FeedBackHelper:
          st.info('No data found - Please select Upload to upload the data')
          st.stop()
       df = df.sort_values(by=['idx'])
+      st.write(f'{len(df)} Reviews')
       venue = st.selectbox('Select the Venue', options = all_venues, index = 0)
       if venue != 'All':
          df = df[df['Reservation_Venue'] == venue]
-
+      name_file = st.text_input('data')
+      if c2.button('Download Data', type = 'primary'):
+         st.markdown(get_table_download_link(df, name_file))
       st.write(df)
 
-      name_file = st.text_input('data')
-      if st.button('Download Data'):
-         st.markdown(get_table_download_link(df, name_file))
+
 
    def ai_assistant(self):
       if 'data' not in st.session_state:
