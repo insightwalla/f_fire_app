@@ -213,6 +213,12 @@ class FeedBackHelper:
       self.all_data = df
       df_empty = df[df['Details'] == 'nan']
       df = df[df['Details'] != 'nan']
+      
+      # adds search bar
+      search = st.sidebar.text_input('Search', key='search')
+      if search != '':
+         df = df[df['Details'].str.contains(search, case=False)]
+         
 
       if 'venue' not in st.session_state:
          try:
