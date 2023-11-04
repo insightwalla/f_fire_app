@@ -206,10 +206,7 @@ class FeedBackHelper:
          st.write(df)
 
       all_venues = df['Reservation_Venue'].unique().tolist()
-      res_dict = {
-         'all_venues' : all_venues,
-         'data' : df
-      }
+
       self.all_data = df
       df_empty = df[df['Details'] == 'nan']
       df = df[df['Details'] != 'nan']
@@ -252,6 +249,10 @@ class FeedBackHelper:
 
       # create a delete button for the selected venue
       c1,c2 = st.columns(2)
+      res_dict = {
+         'all_venues' : all_venues,
+         'data' : df
+      }
       return res_dict
 
    def upload_excels(self):
