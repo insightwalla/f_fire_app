@@ -346,7 +346,9 @@ class FeedBackHelper:
       # st.write(len(list_of_index_full))
       from_real_to_fake = {i+1 : index for i, index in enumerate(list_of_index_full)}
       #st.write('All Data', len(df), 'Data with Details', len(df_full))
-      index = c2.number_input('Choose the index', min_value=1, max_value=len(df_full), value = 1, step=1)
+      if 'last_index' not in st.session_state:
+         st.session_state.last_index = 1
+      index = c2.number_input('Choose the index', min_value=1, max_value=len(df_full), value = st.session_state.last_index, key='index')
 
       def get_review_by_venue_and_idx(venue, idx, give_doc = False):
          notes_ref = self.db.collection(u'feedback').document(venue).collection(u'reviews')
