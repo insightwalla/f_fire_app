@@ -369,9 +369,11 @@ class FeedBackHelper:
       def on_change_v(df = df):
          if 'venue' not in st.session_state:
             st.session_state.venue = None
-         df = df[df['Reservation_Venue'] == st.session_state.venue
+         df = df[df['Reservation_Venue'] == st.session_state.venue]
 
-      venue = c1.selectbox('Choose the venue', all_venues, key='venue', on_change = on_change_v(df))
+      venue = c1.selectbox(label = 'Choose the venue',
+                            all_venues, key='venue', 
+                            on_change = on_change_v(df))
 
       # 3. Create the delete button
       def OnDeleteVenueRevs(name):
