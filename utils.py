@@ -597,4 +597,4 @@ def get_sales_date(store_id, date, time = None):
     # add vertical line on time
     if time is not None:
         fig.add_vline(x=time, line_width=10, line_color="red", opacity=0.3)
-    st.plotly_chart(fig)
+    st.plotly_chart(fig, use_container_width = True)
