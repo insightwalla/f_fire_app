@@ -831,7 +831,9 @@ class FeedBackHelper:
                res = self.read(show= False)
                self.plot(res['data'])
                st.stop()  
-
+         else:
+            self.plot(self.df)
+            st.stop()
       if choice == 'Scoring':
             self.edit()
             st.stop()
