@@ -334,7 +334,7 @@ class FeedBackHelper:
                my_bar = st.progress(0, text='Uploading data')
 
                if doc.exists:
-                  st.write('Document already exists')
+                  #st.write('Document already exists')
                   # delete the collection
                   reviews = self.db.collection(u'feedback').document(name).collection(u'reviews').stream()
                   for i, review in enumerate(reviews):
