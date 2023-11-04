@@ -372,7 +372,7 @@ class FeedBackHelper:
          df = df[df['Reservation_Venue'] == st.session_state.venue]
 
       venue = c1.selectbox(label = 'Choose the venue',
-                            orpions = all_venues,
+                            options = all_venues,
                             on_change = on_change_v(df), 
                             key='venue') 
 
