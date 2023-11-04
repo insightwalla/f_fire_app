@@ -229,6 +229,9 @@ class FeedBackHelper:
             st.session_state.venue = None
 
       self.venue = st.session_state.venue
+      
+      if len(df_empty) > 0:
+         df_empty = rescoring_empty(df_empty, new=True)
       create_container_for_each_sentiment(df, df_empty)
       self.plot(df)
 
