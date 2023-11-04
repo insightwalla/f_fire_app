@@ -383,7 +383,7 @@ class FeedBackHelper:
                st.write('Deleted Data for ', name)
 
       if st.sidebar.button(f'Delete **{venue}**', type = 'primary', use_container_width=True):
-         OnDeleteVenueRevs(self.venue)
+         OnDeleteVenueRevs(venue)
       with st.sidebar.expander('Ratings Info'):
                st.write(f'**5** -> **10**')
                st.write(f'**4** -> **8**')
@@ -392,7 +392,7 @@ class FeedBackHelper:
                st.write(f'**1** -> **1**')
 
       # 4. Prepare the dataframes
-      df = df[df['Reservation_Venue'] == self.venue] # filter by venue
+      df = df[df['Reservation_Venue'] == venue] # filter by venue
       
       # take off empty detail
       df['Details'] = df['Details'].apply(lambda x: x.strip())
