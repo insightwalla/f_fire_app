@@ -554,15 +554,15 @@ class FeedBackHelper:
          href = f'<a href="data:file/csv;base64,{b64}" download="data.csv">Download csv file</a>'
          return href
       
-      df = pd.DataFrame()
-      data = self.db.collection(u'feedback').stream()
+      data_list = []
+      data = self.db.collection('feedback').stream()
+
       for doc in data:
          reviews = self.db.collection(u'feedback').document(doc.id).collection(u'reviews').stream()
-         for i, review in enumerate(reviews):
-            #st.write(review.to_dict())
-            # make it a dataframe
-            df = pd.concat([df, pd.DataFrame(review.to_dict(), index=[i])], axis=0)
-            # sort by idx
+         for review in reviews:
+            data_list.append(review.to_dict())
+
+      df = pd.DataFrame(data_list)
       if len(df) == 0:  
          st.info('No data found - Please select Upload to upload the data')
          st.stop()
@@ -574,16 +574,16 @@ class FeedBackHelper:
    def ai_assistant(self):
       if 'data' not in st.session_state:
 
-         df = pd.DataFrame()
-         data = self.db.collection(u'feedback').stream()
+      
+         data_list = []
+         data = self.db.collection('feedback').stream()
+
          for doc in data:
             reviews = self.db.collection(u'feedback').document(doc.id).collection(u'reviews').stream()
-            for i, review in enumerate(reviews):
-                  #st.write(review.to_dict())
-                  # make it a dataframe
-                  df = pd.concat([df, pd.DataFrame(review.to_dict(), index=[i])], axis=0)
-            # sort by idx
-         df = df.sort_values(by=['idx'])
+            for review in reviews:
+               data_list.append(review.to_dict())
+
+         df = pd.DataFrame(data_list)
          st.session_state.data = df
 
       from templates.ai_mod import final_page_ai
@@ -597,15 +597,16 @@ class FeedBackHelper:
       4. Create a container for each sentiment
       5. Create a delete button
       '''
-      df = pd.DataFrame()
-      data = self.db.collection(u'feedback').stream()
+      
+      data_list = []
+      data = self.db.collection('feedback').stream()
+
       for doc in data:
          reviews = self.db.collection(u'feedback').document(doc.id).collection(u'reviews').stream()
-         for i, review in enumerate(reviews):
-               #st.write(review.to_dict())
-               # make it a dataframe
-               df = pd.concat([df, pd.DataFrame(review.to_dict(), index=[i])], axis=0)
-         # sort by idx
+         for review in reviews:
+            data_list.append(review.to_dict())
+
+      df = pd.DataFrame(data_list)
       df = df.sort_values(by=['idx'])
       #st.write(len(df))
 
