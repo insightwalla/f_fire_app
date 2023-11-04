@@ -220,6 +220,30 @@ class FeedBackHelper:
          if len(df) == 0:
             st.info('No reviews Found')
             st.stop()
+
+      with st.expander('Filters'):
+         # filter by sentiment
+         sentiment = st.sidebar.selectbox('Choose the sentiment', ['All', 'Positive', 'Negative'], key='sentiment', index=0)
+         if sentiment != 'All':
+            df = df[df['Sentiment'] == sentiment]
+
+         # add toggle for searching only the ones negative with empty label
+         only_negative_empty = st.sidebar.checkbox('Only Negative Empty', key='only_negative_empty')
+         if only_negative_empty:
+            df = df[(df['Sentiment'] == 'NEGATIVE') & (df['Label_Dishoom'] == '')]
+
+         # now filter by thumbs up and thumbs down
+         thumbs_up = st.sidebar.checkbox('Show Thumbs Up', key='thumbs_up')
+         thumbs_down = st.sidebar.checkbox('Show Thumbs Down', key='thumbs_down')
+         suggestions = st.sidebar.checkbox('Show Suggestions', key='suggestions')
+
+         if thumbs_up:
+            df = df[df['👍'] == '1']
+         if thumbs_down:
+            df = df[df['👎'] == '1']
+         if suggestions:
+            df = df[df['💡'] == '1']
+
          
 
       if 'venue' not in st.session_state:
@@ -392,7 +416,7 @@ class FeedBackHelper:
       
       def on_change_n():
          st.session_state.last_index = index
-         
+
       index = c2.number_input('Choose the index', min_value=1, max_value=len(df_full), value = st.session_state.last_index, key='index')
 
 
