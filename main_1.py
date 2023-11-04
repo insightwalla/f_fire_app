@@ -596,13 +596,13 @@ class FeedBackHelper:
    def download(self):
       st.write('Download')
       
-      def get_table_download_link(data):
+      def get_table_download_link(data, name_file):
          # rename the columns that have emoji
          data = data.rename(columns={'👍': 'thumbs_up', '👎': 'thumbs_down', '💡': 'suggestions'})
          # create a link to download the dataframe
          csv = data.to_csv(index=False)
          b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-         href = f'<a href="data:file/csv;base64,{b64}" download="data.csv">Download csv file</a>'
+         href = f'<a href="data:file/csv;base64,{b64}" download="{name_file}.csv">Download File as ({name_file})</a>'
          return href
       
       data_list = []
@@ -618,9 +618,10 @@ class FeedBackHelper:
          st.info('No data found - Please select Upload to upload the data')
          st.stop()
       df = df.sort_values(by=['idx'])
+
+      name_file = st.text_input('data')
       if st.button('Download Data'):
-         get_table_download_link(df)
-         st.markdown(get_table_download_link(df), unsafe_allow_html=True)
+         st.markdown(get_table_download_link(df, name_file)
 
    def ai_assistant(self):
       if 'data' not in st.session_state:
