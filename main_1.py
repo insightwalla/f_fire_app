@@ -869,7 +869,7 @@ class FeedBackHelper:
                ]),
                sac.MenuItem('AI Assistant', icon='robot'),
                sac.MenuItem('Reporting', icon='share'),
-               sac.MenuItem('Settings', icon='gear'),
+               #sac.MenuItem('Settings', icon='gear'),
                   
          ], open_all=False)
          return menu
