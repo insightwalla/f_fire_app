@@ -700,6 +700,9 @@ class FeedBackHelper:
             data_list.append(review.to_dict())
 
       df = pd.DataFrame(data_list)
+      if len(data) == 0:
+         st.info('Need to Upload some Data First')
+         st.stop()
       df = df.sort_values(by=['idx'])
       #st.write(len(df))
 
