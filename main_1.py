@@ -483,19 +483,19 @@ class FeedBackHelper:
                is_best = False
                col_best.info('Already selected 3 👍')
             else:
-               is_best = col_best.toggle('👍',review['👍'] == '1')#, key = f'is_good{from_real_to_fake[index]}={venue}')
+               is_best = col_best.toggle('👍',review['👍'] == '1', key = f'is_good{from_real_to_fake[index]}={venue}')
 
             if len(worst_rev) == 3 and not is_this_worst:
                is_worst = False
                col_worst.info('Already selected 3 👎')
             else:
-               is_worst = col_worst.toggle('👎',review['👎'] == '1')#, key= f'is_bad{from_real_to_fake[index]}={venue}')
+               is_worst = col_worst.toggle('👎',review['👎'] == '1', key= f'is_bad{from_real_to_fake[index]}={venue}')
 
             if len(suggestions_rev) == 3 and not is_this_suggestion:
                is_suggestion = False
                col_sugg.write('Already selected 3 💡')
             else:
-               is_suggestion = col_sugg.toggle('💡',review['💡'] == '1')#, key= f'is_suggestion{from_real_to_fake[index]}={venue}')
+               is_suggestion = col_sugg.toggle('💡',review['💡'] == '1', key= f'is_suggestion{from_real_to_fake[index]}={venue}')
 
             def clean_column_entries(review, col_name):
                '''
@@ -513,46 +513,46 @@ class FeedBackHelper:
 
             new_food = col_food.multiselect('Food Items', 
                                              menu_items_lookup, 
-                                             default=clean_column_entries(review, 'Menu_Item'))#, 
-                                             #key= 'food_item' + str(from_real_to_fake[index])+venue)
+                                             default=clean_column_entries(review, 'Menu_Item'), 
+                                             key= 'food_item' + str(from_real_to_fake[index])+venue)
             
             new_drink = col_drinks.multiselect('Drink Items',
                                                 drink_items_lookup, 
                                                 default=clean_column_entries(review, 'Drink_Item'), 
-                                                )#key='drink_item' + str(from_real_to_fake[index])+venue)
+                                                key='drink_item' + str(from_real_to_fake[index])+venue)
             
             new_label = st.multiselect('Label Dishoom',
                                        options_for_classification, 
                                        default=clean_column_entries(review, 'Label_Dishoom'), 
-                                       )#key='label' + str(from_real_to_fake[index])+venue)
+                                       key='label' + str(from_real_to_fake[index])+venue)
 
             
-            r =  st.sidebar.radio(label = 'stars or numbers', options = ['stars', 'numbers'])#, key='stars_or_numbers')
+            r =  st.sidebar.radio(label = 'stars or numbers', options = ['stars', 'numbers'], key='stars_or_numbers')
             if r == 'stars':
                with c_ov_r:
                   overall_rating = sac.rate(label=f'Overall Rating: **{review["Overall_Rating"]}**', 
                                             value=int(review['New_Overall_Rating']), 
                                             count=value_map[float(review['Overall_Rating']) if review['Overall_Rating'] not in nans_map else 5], 
-                                            )#key = 'overall' + str(index)+venue)
+                                            key = 'overall' + str(index)+venue)
                with c_fo_r:
-                  food_rating = sac.rate(label=f'Food Rating: **{review["Feedback_Food_Rating"]}**', value=int(review['New_Food_Rating']), count=value_map[float(review['Feedback_Food_Rating']) if review['Feedback_Food_Rating']not in nans_map else 5])#, key = 'food' + str(from_real_to_fake[index])+venue)
+                  food_rating = sac.rate(label=f'Food Rating: **{review["Feedback_Food_Rating"]}**', value=int(review['New_Food_Rating']), count=value_map[float(review['Feedback_Food_Rating']) if review['Feedback_Food_Rating']not in nans_map else 5], key = 'food' + str(from_real_to_fake[index])+venue)
                with c_dr_r:
-                  drink_rating = sac.rate(label=f'Drink Rating: **{review["Feedback_Drink_Rating"]}**', value=int(review['New_Drink_Rating']), count=value_map[float(review['Feedback_Drink_Rating']) if review['Feedback_Drink_Rating']not in nans_map else 5])#, key = 'drink' + str(from_real_to_fake[index])+venue)
+                  drink_rating = sac.rate(label=f'Drink Rating: **{review["Feedback_Drink_Rating"]}**', value=int(review['New_Drink_Rating']), count=value_map[float(review['Feedback_Drink_Rating']) if review['Feedback_Drink_Rating']not in nans_map else 5], key = 'drink' + str(from_real_to_fake[index])+venue)
                with c_se_r:
-                  service_rating = sac.rate(label=f'Service Rating: **{review["Feedback_Service_Rating"]}**', value=int(review['New_Service_Rating']), count=value_map[float(review['Feedback_Service_Rating']) if review['Feedback_Service_Rating'] not in nans_map  else 5])#, key = 'service' + str(from_real_to_fake[index])+venue)
+                  service_rating = sac.rate(label=f'Service Rating: **{review["Feedback_Service_Rating"]}**', value=int(review['New_Service_Rating']), count=value_map[float(review['Feedback_Service_Rating']) if review['Feedback_Service_Rating'] not in nans_map  else 5], key = 'service' + str(from_real_to_fake[index])+venue)
                with c_am_r:
-                  ambience_rating = sac.rate(label=f'Ambience Rating: **{review["Feedback_Ambience_Rating"]}**', value=int(review['New_Ambience_Rating']), count=value_map[float(review['Feedback_Ambience_Rating']) if review['Feedback_Ambience_Rating'] not in nans_map else 5])#, key = 'ambience' + str(from_real_to_fake[index])+venue)
+                  ambience_rating = sac.rate(label=f'Ambience Rating: **{review["Feedback_Ambience_Rating"]}**', value=int(review['New_Ambience_Rating']), count=value_map[float(review['Feedback_Ambience_Rating']) if review['Feedback_Ambience_Rating'] not in nans_map else 5], key = 'ambience' + str(from_real_to_fake[index])+venue)
             else:
                with c_ov_r:
-                  overall_rating = st.number_input(f'Overall Rating: **{review["Overall_Rating"]}**', min_value=1, max_value=value_map[float(review['Overall_Rating']) if review['Overall_Rating'] not in nans_map else 5], value=int(review['New_Overall_Rating']))#, key = 'overall' + str(from_real_to_fake[index])+venue)
+                  overall_rating = st.number_input(f'Overall Rating: **{review["Overall_Rating"]}**', min_value=1, max_value=value_map[float(review['Overall_Rating']) if review['Overall_Rating'] not in nans_map else 5], value=int(review['New_Overall_Rating']), key = 'overall' + str(from_real_to_fake[index])+venue)
                with c_fo_r:
-                  food_rating = st.number_input(f'Food Rating: **{review["Feedback_Food_Rating"]}**', min_value=1, max_value=value_map[float(review['Feedback_Food_Rating']) if review['Feedback_Food_Rating']not in nans_map else 5], value=int(review['New_Food_Rating']))#, key = 'food' + str(from_real_to_fake[index])+venue)
+                  food_rating = st.number_input(f'Food Rating: **{review["Feedback_Food_Rating"]}**', min_value=1, max_value=value_map[float(review['Feedback_Food_Rating']) if review['Feedback_Food_Rating']not in nans_map else 5], value=int(review['New_Food_Rating']), key = 'food' + str(from_real_to_fake[index])+venue)
                with c_dr_r:
-                  drink_rating = st.number_input(f'Drink Rating: **{review["Feedback_Drink_Rating"]}**', min_value=1, max_value=value_map[float(review['Feedback_Drink_Rating']) if review['Feedback_Drink_Rating']not in nans_map else 5], value=int(review['New_Drink_Rating']))#, key = 'drink' + str(from_real_to_fake[index])+venue)
+                  drink_rating = st.number_input(f'Drink Rating: **{review["Feedback_Drink_Rating"]}**', min_value=1, max_value=value_map[float(review['Feedback_Drink_Rating']) if review['Feedback_Drink_Rating']not in nans_map else 5], value=int(review['New_Drink_Rating']), key = 'drink' + str(from_real_to_fake[index])+venue)
                with c_se_r:
-                  service_rating = st.number_input(f'Service Rating: **{review["Feedback_Service_Rating"]}**', min_value=1, max_value=value_map[float(review['Feedback_Service_Rating']) if review['Feedback_Service_Rating'] not in nans_map  else 5], value=int(review['New_Service_Rating']))#, key = 'service' + str(from_real_to_fake[index])+venue)
+                  service_rating = st.number_input(f'Service Rating: **{review["Feedback_Service_Rating"]}**', min_value=1, max_value=value_map[float(review['Feedback_Service_Rating']) if review['Feedback_Service_Rating'] not in nans_map  else 5], value=int(review['New_Service_Rating']), key = 'service' + str(from_real_to_fake[index])+venue)
                with c_am_r:
-                  ambience_rating = st.number_input(f'Ambience Rating: **{review["Feedback_Ambience_Rating"]}**', min_value=1, max_value=value_map[float(review['Feedback_Ambience_Rating']) if review['Feedback_Ambience_Rating'] not in nans_map else 5], value=int(review['New_Ambience_Rating']))#, key = 'ambience' + str(from_real_to_fake[index])+venue)
+                  ambience_rating = st.number_input(f'Ambience Rating: **{review["Feedback_Ambience_Rating"]}**', min_value=1, max_value=value_map[float(review['Feedback_Ambience_Rating']) if review['Feedback_Ambience_Rating'] not in nans_map else 5], value=int(review['New_Ambience_Rating']), key = 'ambience' + str(from_real_to_fake[index])+venue)
                   
             # update the review
 
