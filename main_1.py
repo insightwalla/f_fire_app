@@ -385,7 +385,7 @@ class FeedBackHelper:
                st.write('Deleted Data for ', name)
 
       if st.sidebar.button(f'Delete **{venue}**', type = 'primary', use_container_width=True):
-         wtih st.spinner(f'Deleting **{venue}**')
+         with st.spinner(f'Deleting **{venue}**')
             OnDeleteVenueRevs(venue)
       with st.sidebar.expander('Ratings Info'):
                st.write(f'**5** -> **10**')
