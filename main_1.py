@@ -378,17 +378,15 @@ class FeedBackHelper:
             doc_ref = self.db.collection(u'feedback').document(name)
             doc = doc_ref.get()
             if doc.exists:
-               st.write('Document already exists')
                # delete the collection
                reviews = self.db.collection(u'feedback').document(name).collection(u'reviews').stream()
                for i, review in enumerate(reviews):
                   self.db.collection(u'feedback').document(name).collection(u'reviews').document(review.id).delete()
-               # now delete the doc
-               self.db.collection(u'feedback').document(name).delete()
                st.write('Deleted Data for ', name)
 
       if st.sidebar.button(f'Delete **{venue}**', type = 'primary', use_container_width=True):
-         OnDeleteVenueRevs(venue)
+         wtih st.spinner(f'Deleting **{venue}**')
+            OnDeleteVenueRevs(venue)
       with st.sidebar.expander('Ratings Info'):
                st.write(f'**5** -> **10**')
                st.write(f'**4** -> **8**')
