@@ -565,8 +565,11 @@ class FeedBackHelper:
                   #    col1, col2 = st.columns(2)
                   #    col1.write(doc[0].to_dict())
                   #    col2.write(review)
-                  doc[0].reference.update(review)
-                  c2_button.success('Update Complete')
+                  if doc[0]:
+                     doc[0].reference.update(review)
+                     c2_button.success('Update Complete')
+                  else:
+                     c2.info('No Review Found in db?')
                else:
                   c2_button.info('Nothing to Update')
                
