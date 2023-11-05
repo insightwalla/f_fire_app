@@ -436,7 +436,7 @@ class FeedBackHelper:
       edit_tab, venue_tab = st.tabs([f'Edit {index}/{len(df_full)}', 'Venue Details'])
       
       with edit_tab:
-         with st.form('scoring'):
+         with st.form('scoring', clear_on_submit = True):
             col_buttons = st.columns([0.3,0.3,0.3])
             c1_button = col_buttons[0]
             c2_button = col_buttons[1]
