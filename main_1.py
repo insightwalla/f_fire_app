@@ -585,10 +585,10 @@ class FeedBackHelper:
                   doc[0].reference.delete()
                st.success('Review deleted successfully')
             
-            if c3_button.form_submit_button('Update', type='primary', use_container_width=True):
+            if c3_button.form_submit_button('Update', type='primary', use_container_width=True, key =f'form{from_real_to_fake[index]}{venue}'):
                   OnUpdateButton(review)
 
-            if c1_button.form_submit_button('Delete', type='secondary', use_container_width=True):
+            if c1_button.form_submit_button('Delete', type='secondary', use_container_width=True key =f'del{from_real_to_fake[index]}{venue}'):
                OnDeleteSingleRev()   
       
       with venue_tab:
